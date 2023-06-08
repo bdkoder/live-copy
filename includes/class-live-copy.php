@@ -37,10 +37,10 @@ class LiveCopy {
     }
 
     public function enqueue_scripts() {
-        wp_register_script('live-copy-clipboard', LIVE_COPY_ASSETS_URL .  '/vendor/clipboard.min.js', array(), LIVE_COPY_VER, 'all');
+        wp_register_script('live-copy-clipboard', LIVE_COPY_ASSETS_URL .  'vendor/clipboard.min.js', array(), LIVE_COPY_VER, 'all');
         wp_enqueue_script('live-copy-clipboard');
 
-        wp_register_script('live-copy-script', LIVE_COPY_ASSETS_URL .  '/js/script.js', array('jquery'), LIVE_COPY_VER, true);
+        wp_register_script('live-copy-script', LIVE_COPY_ASSETS_URL .  'js/script.js', array('jquery'), LIVE_COPY_VER, true);
         wp_enqueue_script('live-copy-script');
         wp_localize_script('live-copy-script', 'ElLiveCopyData', array(
             'enable' => true,

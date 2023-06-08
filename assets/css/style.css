@@ -20,7 +20,7 @@
     padding: 8px 10px 8px 15px;
     display: inline-block;
     background: #6b4ff4;
-    color: #fff;
+    color: #fff !important;
     border-radius: 20px 0 0 20px;
     -webkit-border-radius: 20px 0 0 20px;
     -moz-border-radius: 20px 0 0 20px;
@@ -32,12 +32,12 @@
     padding: 8px 10px 8px 15px;
     display: inline-block;
     background: #6b4ff4;
-    color: #fff;
+    color: #fff !important;
     font-weight: bolder;
 }
 
 .ellc-copy-btn:hover,
 .ellc-magic-copy-info:hover {
     background: #e2498a;
-    color: #fff;
+    color: #fff !important;
 }
