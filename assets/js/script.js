@@ -5,8 +5,6 @@
         return;
     }
 
-
-
     var El_Live_Copy = {
         globalSelector: function (e) {
             this._document = $(document);
