@@ -1,0 +1,32 @@
+{
+  "name": "elementor-live-copy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bdkoder/elementor-live-copy.git"
+  },
+  "author": "Shahidul Islam",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.6.1",
+    "grunt-build-number": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-less": "^1.4.1",
+    "grunt-contrib-obfuscator": "^8.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-rtlcss": "^2.0.2",
+    "grunt-terser": "^1.0.0",
+    "javascript-obfuscator": "^4.0.2",
+    "jit-grunt": "^0.10.0"
+  },
+  "bugs": {
+    "url": "https://github.com/bdkoder/elementor-live-copy/issues"
+  },
+  "homepage": "https://github.com/bdkoder/elementor-live-copy#readme"
+}

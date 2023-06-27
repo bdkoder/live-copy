@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name
  *
@@ -9,8 +8,8 @@
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
- * Plugin Name:       Live Copy
- * Plugin URI:        https://example.com/
+ * Plugin Name:       Elementor Live Copy
+ * Plugin URI:        https://github.com/bdkoder
  * Description:       Live Copy for Elementor.
  * Version:           1.0.0
  * Requires at least: 5.2
@@ -20,20 +19,26 @@
  * Text Domain:       live-copy
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Update URI:        https://example.com/my-plugin/
  */
 
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-define('LIVE_COPY_VER', '1.0.0');
-define('LIVE_COPY__FILE__', __FILE__);
-define('LIVE_COPY_URL', plugins_url('/', LIVE_COPY__FILE__));
-define('LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/');
+define( 'LIVE_COPY_VER', '1.0.0' );
+define( 'LIVE_COPY__FILE__', __FILE__ );
+define( 'LIVE_COPY_URL', plugins_url( '/', LIVE_COPY__FILE__ ) );
+define( 'LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/' );
 
-include_once dirname(__FILE__) . '/includes/class-live-copy.php';
+require_once dirname( __FILE__ ) . '/includes/class-live-copy.php';
 
+/**
+ * Run Live Copy
+ *
+ * @return void
+ */
 function run_livecopy() {
-    new \ElementorLiveCopy\LiveCopy();
+	new \ElementorLiveCopy\Live_Copy();
 }
 
 run_livecopy();
