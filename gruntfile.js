@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-    
+
     require('jit-grunt')(grunt);
 
     grunt.initConfig({
@@ -77,7 +77,22 @@ module.exports = function (grunt) {
                 },
             }
         },
-
+        // compress: {
+        //     main: {
+        //         options: {
+        //             archive: 'elementor-live-copy.zip'
+        //         },
+        //         expand: true,
+        //         cwd: 'assets/',
+        //         src: [
+        //             'assets/**',
+        //             'includes/**',
+        //             'elementor-live-copy.php',
+        //             'readme.txt',
+        //         ],
+        //         dest: 'public/'
+        //     }
+        // },
         buildnumber: {
             options: {
                 field: 'buildnum',
@@ -90,7 +105,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-rtlcss');
     grunt.loadNpmTasks('grunt-contrib-obfuscator');
     grunt.loadNpmTasks('grunt-terser');
-    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
     grunt.registerTask('default', ['less', 'rtlcss', 'terser', 'watch']);
 
