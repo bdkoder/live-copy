@@ -8,7 +8,10 @@
     var El_Live_Copy = {
         globalSelector: function (e) {
             this._document = $(document);
-            this._elItem = this._document.find('.elementor-element.e-con, .elementor-section.elementor-top-section');
+            // this._elItem = this._document.find('.elementor-element.e-con, .elementor-section.elementor-top-section');
+            this._elItem = this._document.find('.elementor-element.e-con:not(.elementor-element.e-con .elementor-element.e-con), .elementor-section.elementor-top-section:not(.elementor-section.elementor-top-section .elementor-section.elementor-top-section)');
+            // select only first element if no element found
+            
             if (this._elItem.length === 0) {
                 this._elItem = this._document.find('.elementor-section.elementor-top-section');
             }
