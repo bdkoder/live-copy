@@ -8,10 +8,10 @@
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
- * Plugin Name:       Elementor Live Copy
+ * Plugin Name:       Elementor Live Copy Tool
  * Plugin URI:        https://github.com/bdkoder
  * Description:       Live Copy for Elementor.
- * Version:           1.0.0
+ * Version:           1.0.5
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            Shahidul Islam
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LIVE_COPY_VER', '1.0.0' );
+define( 'LIVE_COPY_VER', '1.0.5' );
 define( 'LIVE_COPY__FILE__', __FILE__ );
 define( 'LIVE_COPY_URL', plugins_url( '/', LIVE_COPY__FILE__ ) );
 define( 'LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/' );

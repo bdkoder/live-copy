@@ -8,9 +8,9 @@
     var El_Live_Copy = {
         globalSelector: function (e) {
             this._document = $(document);
-            this._elItem = this._document.find('.elementor-section.elementor-top-section');
+            this._elItem = this._document.find('.elementor-element.e-con, .elementor-section.elementor-top-section');
             if (this._elItem.length === 0) {
-                this._elItem = this._document.find('.elementor-element.e-con');
+                this._elItem = this._document.find('.elementor-section.elementor-top-section');
             }
         },
         copyBtn: function () {
