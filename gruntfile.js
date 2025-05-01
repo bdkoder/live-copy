@@ -77,22 +77,22 @@ module.exports = function (grunt) {
                 },
             }
         },
-        // compress: {
-        //     main: {
-        //         options: {
-        //             archive: 'elementor-live-copy.zip'
-        //         },
-        //         expand: true,
-        //         cwd: 'assets/',
-        //         src: [
-        //             'assets/**',
-        //             'includes/**',
-        //             'elementor-live-copy.php',
-        //             'readme.txt',
-        //         ],
-        //         dest: 'public/'
-        //     }
-        // },
+      compress: {
+        main: {
+          options: {
+            archive: 'live-copy.zip'
+          },
+          expand: true,
+          cwd: './',  // Changed from 'assets/' to root directory
+          src: [
+            'assets/**',
+            'includes/**',
+            'live-copy.php',
+            'readme.txt',
+          ],
+          dest: 'live-copy/'
+        }
+      },
         buildnumber: {
             options: {
                 field: 'buildnum',

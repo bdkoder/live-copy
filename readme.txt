@@ -1,19 +1,17 @@
 === Elementor Live Copy Tools ===
 Plugin Name: Elementor Live Copy Tools
-Version: 1.0.6
+Version: 1.0.7
 Author: bdkoder
 Author URI: https://github.com/bdkoder
 Contributors: bdkoder
 Tags: elementor live copy, cross domain copy, elementor extensions, elementor addon, addons
 Donate link: https://github.com/bdkoder
 Requires at least: 5.0.0
-Tested up to: 6.2.2
+Tested up to: 6.8.1
 Requires PHP: 7.4.0
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Elementor requires at least: 3.0.0
-Elementor tested up to: 3.14.1
 
 With this plugin, you can effortlessly import or paste any section of your website from the Elementor Editor, Widget Demo, Ready-Made Pages, and Blocks. It only takes one click to change the world.
 
@@ -35,11 +33,15 @@ This section describes how to install the plugin and get it working.
 
 e.g.
 
-1. Upload `elementor-live-copy` folder to the `/wp-content/plugins/` directory
+1. Upload `live-copy` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Start using it by going to elementor editor.
 
 == Changelog ==
+
+= 1.0.7 [1st May 2025] =
+
+* System improved
 
 = 1.0.6 [28th May 2024] =
 
