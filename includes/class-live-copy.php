@@ -24,7 +24,7 @@ class Live_Copy {
 	 */
 	public function __construct() {
 		if ( ! is_admin() ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+      add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 998 );
 		}
 		add_action( 'wp_ajax_nopriv_ellc_copy_data', array( $this, 'get_live_copy_data' ) );
 		add_action( 'wp_ajax_ellc_copy_data', array( $this, 'get_live_copy_data' ) );
@@ -36,7 +36,7 @@ class Live_Copy {
 	 * @since 1.0.0
 	 */
 	public function enqueue_assets() {
-		$this->enqueue_styles();
+    $this->enqueue_styles();
 		$this->enqueue_scripts();
 	}
 
@@ -60,8 +60,6 @@ class Live_Copy {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( 'live-copy-clipboard' );
-
 		wp_register_script( 'live-copy-script', LIVE_COPY_ASSETS_URL . 'js/script.js', array( 'jquery' ), LIVE_COPY_VER, true );
 		wp_enqueue_script( 'live-copy-script' );
 		wp_localize_script(

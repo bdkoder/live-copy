@@ -11,7 +11,7 @@
  * Plugin Name:       Elementor Live Copy Tool
  * Plugin URI:        https://github.com/bdkoder
  * Description:       Live Copy for Elementor.
- * Version:           1.0.7
+ * Version:           1.0.10
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            Shahidul Islam
@@ -29,7 +29,7 @@ add_action('plugin_loaded', function () {
   
 });
 
-define('LIVE_COPY_VER', '1.0.7');
+define('LIVE_COPY_VER', '1.0.10');
 define('LIVE_COPY__FILE__', __FILE__);
 define('LIVE_COPY_URL', plugins_url('/', LIVE_COPY__FILE__));
 define('LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/');
@@ -42,29 +42,22 @@ require_once dirname(__FILE__) . '/includes/class-live-copy.php';
  * @return void
  */
 
-add_action('plugins_loaded', function () {
-    if (!class_exists('Elementor\Plugin')) {
-        return;
-    }
+add_action('wp', function () {
+  if (defined('SKY_ADDONS_SITE')) {
+      if (is_home()) {
+          return;
+      }
 
-    add_action('wp', function () {
-        // Check if SKY_ADDONS_SITE is defined and skip for specific conditions
-        if (defined('SKY_ADDONS_SITE')) {
-            if (is_home()) {
-                return;
-            }
+      if (is_page(array(6, 205,'elementor-widgets', 'elementor-templates', 'pricing', 'roadmaps', 'changelog'))) {
+          return;
+      }
+  }
 
-            if (is_page(array(6, 205,'elementor-widgets', 'elementor-templates', 'pricing', 'roadmaps', 'changelog'))) {
-                return;
-            }
-        }
+  // Skip in admin area
+  if (is_admin()) {
+      return;
+  }
 
-        // Skip in admin area
-        if (is_admin()) {
-            return;
-        }
-
-        // Initialize Live Copy
-        new \ElementorLiveCopy\Live_Copy();
-    });
+  // Initialize Live Copy
+  new \ElementorLiveCopy\Live_Copy();
 });
