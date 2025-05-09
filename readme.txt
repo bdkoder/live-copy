@@ -1,6 +1,6 @@
 === Elementor Live Copy Tools ===
 Plugin Name: Elementor Live Copy Tools
-Version: 1.0.8
+Version: 1.0.9
 Author: bdkoder
 Author URI: https://github.com/bdkoder
 Contributors: bdkoder
@@ -9,7 +9,7 @@ Donate link: https://github.com/bdkoder
 Requires at least: 5.0.0
 Tested up to: 6.8.1
 Requires PHP: 7.4.0
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,10 @@ e.g.
 3. Start using it by going to elementor editor.
 
 == Changelog ==
+
+= 1.0.9 [9th May 2025] =
+
+* System improved
 
 = 1.0.7 [1st May 2025] =
 

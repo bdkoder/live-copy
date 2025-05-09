@@ -23,9 +23,6 @@ class Live_Copy {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		if ( ! is_admin() ) {
-      add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 998 );
-		}
 		add_action( 'wp_ajax_nopriv_ellc_copy_data', array( $this, 'get_live_copy_data' ) );
 		add_action( 'wp_ajax_ellc_copy_data', array( $this, 'get_live_copy_data' ) );
 	}
@@ -35,9 +32,13 @@ class Live_Copy {
 	 *
 	 * @since 1.0.0
 	 */
-	public function enqueue_assets() {
-    $this->enqueue_styles();
-		$this->enqueue_scripts();
+	public static function enqueue_assets() {
+    if ( is_admin() ) {
+      return;
+    }
+    $obj = new self();
+    add_action( 'wp_enqueue_scripts', array( $obj, 'enqueue_styles' ), 998 );
+    add_action( 'wp_enqueue_scripts', array( $obj, 'enqueue_scripts' ), 998 );
 	}
 
 	/**
@@ -72,7 +73,6 @@ class Live_Copy {
 				'nonce'    => wp_create_nonce( 'el-live-copy-nonce' ),
 			)
 		);
-
 	}
 
 	/**
@@ -91,7 +91,6 @@ class Live_Copy {
 				$meta_data['type']        = 'elementor';
 				$meta_data['siteurl']     = get_rest_url();
 				$section_data             = array_merge( $meta_data, $section_data );
-
 				return $section_data;
 			}
 		}
@@ -105,33 +104,34 @@ class Live_Copy {
 	 * @since 1.0.0
 	 */
 	public function get_live_copy_data() {
-		if ( isset( $_REQUEST ) ) {
-			$post_id   = isset( $_REQUEST['post_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) : false; // 7.
-			$widget_id = isset( $_REQUEST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['widget_id'] ) ) : false; // b0ec141.
-			$nonce     = isset( $_REQUEST['_wp_nonce'] ) ? wp_unslash( $_REQUEST['_wp_nonce'] ) : '';
-			$nonce     = isset( $_REQUEST['_wp_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wp_nonce'] ) ) : '';
+		if ( ! isset( $_REQUEST ) ) {
+      wp_send_json_error( array( 'message' => __( 'Invalid request!', 'live-copy-paste' ) ) );
+    }
+    $post_id   = isset( $_REQUEST['post_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) : false; // 7.
+    $widget_id = isset( $_REQUEST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['widget_id'] ) ) : false; // b0ec141.
+    $nonce     = isset( $_REQUEST['_wp_nonce'] ) ? wp_unslash( $_REQUEST['_wp_nonce'] ) : '';
+    $nonce     = isset( $_REQUEST['_wp_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wp_nonce'] ) ) : '';
 
-			if ( ! wp_verify_nonce( $nonce, 'el-live-copy-nonce' ) ) {
-				wp_send_json_error( array( 'message' => __( 'Sorry, invalid nonce!', 'live-copy-paste' ) ) );
-			}
+    // if ( ! wp_verify_nonce( $nonce, 'el-live-copy-nonce' ) ) {
+    //   wp_send_json_error( array( 'message' => __( 'Sorry, invalid nonce!', 'live-copy-paste' ) ) );
+    // }
 
-			$result = $this->get_live_copy_data_settings( $post_id, $widget_id );
+    $result = $this->get_live_copy_data_settings( $post_id, $widget_id );
 
-			if ( is_wp_error( $result ) ) {
-				$errors = $result->get_error_message();
-				wp_send_json_error( array( 'message' => $errors ) );
-			} else {
-				define(
-					'plugin_dir_url()',
-					plugin_dir_url( __FILE__ ) . '/assets/'
-				);
-				$data = array(
-					'widget' => $result,
-				);
-				wp_send_json_success( $data );
-			}
-			wp_die();
-		}
+    if ( is_wp_error( $result ) ) {
+      $errors = $result->get_error_message();
+      wp_send_json_error( array( 'message' => $errors ) );
+    } else {
+      define(
+        'PLUGIN_DIR_URL',
+        plugin_dir_url( __FILE__ ) . '/assets/'
+      );
+      $data = array(
+        'widget' => $result,
+      );
+      wp_send_json_success( $data );
+    }
+    wp_die();
 	}
 
 	/**

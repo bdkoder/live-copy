@@ -11,7 +11,7 @@
  * Plugin Name:       Elementor Live Copy Tool
  * Plugin URI:        https://github.com/bdkoder
  * Description:       Live Copy for Elementor.
- * Version:           1.0.10
+ * Version:           1.0.9
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            Shahidul Islam
@@ -29,7 +29,7 @@ add_action('plugin_loaded', function () {
   
 });
 
-define('LIVE_COPY_VER', '1.0.10');
+define('LIVE_COPY_VER', '1.0.9');
 define('LIVE_COPY__FILE__', __FILE__);
 define('LIVE_COPY_URL', plugins_url('/', LIVE_COPY__FILE__));
 define('LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/');
@@ -58,6 +58,10 @@ add_action('wp', function () {
       return;
   }
 
-  // Initialize Live Copy
-  new \ElementorLiveCopy\Live_Copy();
+  \ElementorLiveCopy\Live_Copy::enqueue_assets();
+ 
 });
+
+
+ // Initialize Live Copy
+ new \ElementorLiveCopy\Live_Copy();

@@ -47,21 +47,6 @@ module.exports = function (grunt) {
 					}
 				}
 			},
-			obfuscator: {
-				options: {
-					// global options for the obfuscator
-				},
-				task1: {
-					options: {
-						// options for each sub task
-					},
-					files: {
-						'assets/js/script.js': [ // the files and their directories will be created in this folder
-						'src/js/script.js',
-						]
-					}
-				}
-			},
 			watch: {
 				styles: {
 					files: ['src/less/*.less'], // which files to watch
@@ -105,12 +90,9 @@ module.exports = function (grunt) {
 	);
 
 	grunt.loadNpmTasks( 'grunt-rtlcss' );
-	grunt.loadNpmTasks( 'grunt-contrib-obfuscator' );
 	grunt.loadNpmTasks( 'grunt-terser' );
 	grunt.loadNpmTasks( 'grunt-contrib-compress' );
 
 	grunt.registerTask( 'default', ['less', 'rtlcss', 'terser', 'watch'] );
 
 };
-
-// grunt obfuscator
