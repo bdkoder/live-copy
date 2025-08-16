@@ -1,40 +1,31 @@
 <?php
 /**
- * Plugin Name
- *
- * @package           ElementorLiveCopy
- * @author            Shahidul Islam
- * @copyright         2019 Your Name or Company Name
- * @license           GPL-2.0-or-later
- *
- * @wordpress-plugin
- * Plugin Name:       Elementor Live Copy Tool
+ * Plugin Name:       Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer
  * Plugin URI:        https://github.com/bdkoder
- * Description:       Live Copy for Elementor.
- * Version:           1.0.9
- * Requires at least: 5.2
+ * Description:       Live Copy Paste for Elementor. Copy and paste any element from one site to another site.
+ * Version:           1.0.12
+ * Requires at least: 5.0
  * Requires PHP:      7.4
  * Author:            Shahidul Islam
  * Author URI:        https://github.com/bdkoder
  * Text Domain:       live-copy
- * License:           GPL v2 or later
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           GPL v3 or later
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-if (! defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 add_action('plugin_loaded', function () {
-  
 });
 
-define('LIVE_COPY_VER', '1.0.9');
-define('LIVE_COPY__FILE__', __FILE__);
-define('LIVE_COPY_URL', plugins_url('/', LIVE_COPY__FILE__));
-define('LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/');
+define( 'LIVE_COPY_VER', '1.0.12' );
+define( 'LIVE_COPY__FILE__', __FILE__ );
+define( 'LIVE_COPY_URL', plugins_url( '/', LIVE_COPY__FILE__ ) );
+define( 'LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/' );
 
-require_once dirname(__FILE__) . '/includes/class-live-copy.php';
+require_once dirname( __FILE__ ) . '/includes/class-live-copy.php';
 
 /**
  * Run Live Copy
@@ -43,25 +34,24 @@ require_once dirname(__FILE__) . '/includes/class-live-copy.php';
  */
 
 add_action('wp', function () {
-  if (defined('SKY_ADDONS_SITE')) {
-      if (is_home()) {
-          return;
-      }
+	if ( defined( 'SKY_ADDONS_SITE' ) ) {
+		if ( is_home() ) {
+			return;
+		}
 
-      if (is_page(array(6, 205,'elementor-widgets', 'elementor-templates', 'pricing', 'roadmaps', 'changelog'))) {
-          return;
-      }
-  }
+		if ( is_page( [ 6, 205, 'elementor-widgets', 'elementor-templates', 'pricing', 'roadmaps', 'changelog' ] ) ) {
+			return;
+		}
+	}
 
-  // Skip in admin area
-  if (is_admin()) {
-      return;
-  }
+	// Skip in admin area
+	if ( is_admin() ) {
+		return;
+	}
 
-  \ElementorLiveCopy\Live_Copy::enqueue_assets();
- 
+	\ElementorLiveCopy\Live_Copy::enqueue_assets();
 });
 
 
- // Initialize Live Copy
- new \ElementorLiveCopy\Live_Copy();
+// Initialize Live Copy
+new \ElementorLiveCopy\Live_Copy();

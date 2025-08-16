@@ -1,0 +1,48 @@
+# Copyright (C) 2025 Shahidul Islam
+# This file is distributed under the GPL v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer 1.0.12\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/live-copy\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-08-16T15:13:09+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: live-copy\n"
+
+#. Plugin Name of the plugin
+#: live-copy.php
+msgid "Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: live-copy.php
+msgid "https://github.com/bdkoder"
+msgstr ""
+
+#. Description of the plugin
+#: live-copy.php
+msgid "Live Copy Paste for Elementor. Copy and paste any element from one site to another site."
+msgstr ""
+
+#. Author of the plugin
+#: live-copy.php
+msgid "Shahidul Islam"
+msgstr ""
+
+#: includes/class-live-copy.php:108
+msgid "Invalid request!"
+msgstr ""
+
+#: includes/class-live-copy.php:152
+msgid "Invalid Post or Page ID."
+msgstr ""
+
+#: includes/class-live-copy.php:159
+msgid "Page page is not under elementor."
+msgstr ""

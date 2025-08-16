@@ -1,43 +1,137 @@
-=== Elementor Live Copy Tools ===
-Plugin Name: Elementor Live Copy Tools
-Version: 1.0.9
+=== Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer ===
+Plugin Name: Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer
+Version: 1.0.12
 Author: bdkoder
 Author URI: https://github.com/bdkoder
-Contributors: bdkoder
-Tags: elementor live copy, cross domain copy, elementor extensions, elementor addon, addons
+Contributors: bdkoder, wowdevs
+Tags: elementor copy paste, cross domain design, elementor workflow, page duplicator, design transfer
 Donate link: https://github.com/bdkoder
-Requires at least: 5.0.0
-Tested up to: 6.8.1
-Requires PHP: 7.4.0
-Stable tag: 1.0.9
+Requires at least: 5.0
+Tested up to: 6.8
+Requires PHP: 7.4
+Stable tag: 1.0.12
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-With this plugin, you can effortlessly import or paste any section of your website from the Elementor Editor, Widget Demo, Ready-Made Pages, and Blocks. It only takes one click to change the world.
+🎯 Instantly copy and paste Elementor designs across domains. Boost workflow, duplicate pages, and transfer layouts with perfect fidelity.
 
 == Description ==
 
-If you're searching for a simple and speedy solution to transfer web pages from one Elementor website to another on different domains, we've got you covered.
+🚀 **Supercharge Your Elementor Development Workflow**
 
-If you're looking for a quick and easy way to import web pages from multiple domains, look no further than our LIVE COPY PASTE plugin. With this powerful tool, you can import any webpage in just under 5 seconds. Simply copy and paste the content and you're good to go! It's never been easier to streamline your workflow and boost your productivity.
+Live Copy Paste is the ultimate productivity booster for WordPress professionals working with Elementor. Whether you're managing multiple client projects, building website templates, or streamlining your design process, this plugin eliminates the tedious export-import cycle and revolutionizes cross-domain design transfer.
 
-== Features ==
+🎯 Revolutionary Elementor workflow enhancement that enables instant cross-domain design transfer. Copy any section, page, or complete design from one website and paste it seamlessly on another – transforming how you build WordPress sites forever.
 
-= Cross Domain Copy Paste =
+✨ **Why Live Copy Paste Changes Everything**
 
-Looking to save time and boost your productivity as a web designer? With Live Copy Paste, you can import entire designs from one website built with Elementor to another in an instant. This powerful tool empowers you to streamline your workflow and get more done in less time, all while ensuring the highest level of quality for every project. Don't let tedious manual work slow you down - try Live Copy Paste today!
+🔥 **Instant Cross-Domain Transfer** – Seamlessly move any Elementor design between different websites and domains. No complex exports, no file management, no technical headaches!
+
+🎨 **Smart Design Preservation** – Every copied element maintains its original styling, animations, custom CSS, and widget configurations perfectly.
+
+📋 **One-Click Page Duplication** – Clone entire pages, posts, and Elementor templates directly from your WordPress dashboard with zero effort.
+
+🛡️ **Intelligent Access Control** – Show copy functions only to authorized users while keeping your site's frontend clean for visitors.
+
+🎯 **Precision Element Selection** – Target specific sections, containers, or complete page layouts with surgical precision.
+
+== 🌟 Perfect Solution For ==
+
+✅ **Web Development Agencies** – Maintain design consistency across multiple client websites effortlessly
+✅ **Freelance Designers** – Accelerate project delivery with reusable design components and templates
+✅ **Content Managers** – Duplicate successful page layouts for A/B testing and content variations
+✅ **WordPress Developers** – Transfer designs between staging, development, and production environments
+✅ **Template Creators** – Build and distribute professional website designs faster than ever
+
+== ⚡ Game-Changing Features ==
+
+= 🌐 True Cross-Domain Technology =
+* Works flawlessly between completely different domains and hosting environments
+* No server restrictions or hosting provider limitations
+* Maintains full compatibility with all WordPress configurations
+* Preserves complex nested structures and custom styling
+
+= 🎯 Advanced Design Transfer System =
+* Intelligent detection of Elementor elements and structures
+* Complete preservation of widget settings and configurations
+* Automatic handling of custom CSS and animations
+* Support for complex layouts with nested elements
+
+= 📊 Professional Page Management =
+* Instant post and page duplication functionality
+* Seamless Elementor template library integration
+* Automatic preservation of all metadata and taxonomies
+* Smart CSS regeneration for duplicated content
+
+= 🔒 Enterprise-Grade Security =
+* Role-based access control for copy functions
+* Clean frontend experience for regular visitors
+* Selective element targeting when needed
+* Secure data transfer protocols
+
+== 💪 Built for Performance & Reliability ==
+
+Live Copy Paste is engineered with WordPress best practices and optimized for maximum performance. The plugin uses minimal server resources, loads scripts only when necessary, and integrates seamlessly with Elementor's core functionality.
+
+🔄 **Always Compatible** – Regular updates ensure perfect compatibility with the latest WordPress and Elementor versions.
+
+🛠️ **Developer Friendly** – Clean, well-documented code with hooks and filters for custom integrations.
+
+🌍 **Translation Ready** – Fully internationalized and ready for multilingual websites.
+
+== 🎁 Transform Your Workflow Today ==
+
+Experience the future of WordPress design workflow and build stunning websites in record time. Whether you're creating landing pages, business websites, or complex web applications, Live Copy Paste gives you the tools to work smarter and more efficiently.
+
+Join thousands of satisfied users who have revolutionized their Elementor workflow with Live Copy Paste!
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+Getting started with Live Copy Paste is incredibly simple:
 
-e.g.
-
-1. Upload `live-copy` folder to the `/wp-content/plugins/` directory
+1. Upload the `live-copy` folder to your `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Start using it by going to elementor editor.
+3. Open the Elementor editor and start copying designs between sites instantly
+4. Enjoy lightning-fast cross-domain design transfers!
+
+== How It Works ==
+
+1. **Copy**: Select any Elementor section, container, or complete page design
+2. **Transfer**: The plugin securely captures all design data and settings
+3. **Paste**: Navigate to your target website and paste with perfect fidelity
+4. **Done**: Your design appears instantly with all styling and functionality intact
+
+== Frequently Asked Questions ==
+
+= Which page builders are supported? =
+
+Currently, Live Copy Paste is specifically designed for Elementor Page Builder, the industry-leading WordPress page builder. Our team is actively developing support for additional page builders based on user demand.
+
+= How do I receive updates and support? =
+
+Updates are delivered automatically through the WordPress plugin manager. You'll receive notifications whenever new versions are available. For additional support or manual updates, our team is always ready to assist you promptly.
+
+= Is it safe to use on production websites? =
+
+Absolutely! Live Copy Paste is built with enterprise-grade security and follows WordPress coding standards. The plugin includes role-based access controls and doesn't interfere with your site's frontend performance.
+
+= Can I copy designs between different hosting providers? =
+
+Yes! Live Copy Paste works seamlessly across different hosting environments, domains, and server configurations. There are no restrictions based on hosting providers.
+
+= Does it preserve custom CSS and animations? =
+
+Yes, Live Copy Paste maintains all custom styling, CSS modifications, animations, and widget configurations when transferring designs between websites.
+
+== Upgrade Notice ==
+
+🚀 **Stay ahead with the latest features!** Upgrading Live Copy Paste is quick and seamless. Each update brings enhanced performance, new capabilities, and improved compatibility.
 
 == Changelog ==
+
+= 1.0.12 [16th August 2025] =
+
+* System improved
 
 = 1.0.9 [9th May 2025] =
 
@@ -54,18 +148,3 @@ e.g.
 = 1.0.0 [25th June 2023] =
 
 * Initial Release
-
-
-== Upgrade Notice ==
-
-- Upgrading your plugin is quick and easy. Simply click on the updated plugin and install the latest version to unlock new features, bug fixes, and increased performance. Don't miss out on the opportunity to improve your website with a simple upgrade.
-
-== Frequently Asked Questions ==
-
-### Which page builder supports the Live Copy Paste plugin?
-
--Elementor Page Builder has quickly become one of the most robust page builders for WordPress, rivaling even Visual Composer. While it currently only supports Elementor Page Builder, our team has exciting plans for its future development. Keep an eye out for what's to come!
-
-### How should I get updates and support
-
--Our commitment to your ease of use is uncompromising. By simply subscribing to our updates, you will receive timely notifications via the WordPress plugin manager whenever a new version is available. However, if you prefer manual updates, we are always available and ready to assist. Contact us and we will promptly send the updated version directly to your email.

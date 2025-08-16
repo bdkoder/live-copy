@@ -23,8 +23,8 @@ class Live_Copy {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_nopriv_ellc_copy_data', array( $this, 'get_live_copy_data' ) );
-		add_action( 'wp_ajax_ellc_copy_data', array( $this, 'get_live_copy_data' ) );
+		add_action( 'wp_ajax_nopriv_ellc_copy_data', [ $this, 'get_live_copy_data' ] );
+		add_action( 'wp_ajax_ellc_copy_data', [ $this, 'get_live_copy_data' ] );
 	}
 
 	/**
@@ -33,12 +33,12 @@ class Live_Copy {
 	 * @since 1.0.0
 	 */
 	public static function enqueue_assets() {
-    if ( is_admin() ) {
-      return;
-    }
-    $obj = new self();
-    add_action( 'wp_enqueue_scripts', array( $obj, 'enqueue_styles' ), 998 );
-    add_action( 'wp_enqueue_scripts', array( $obj, 'enqueue_scripts' ), 998 );
+		if ( is_admin() ) {
+			return;
+		}
+		$obj = new self();
+		add_action( 'wp_enqueue_scripts', [ $obj, 'enqueue_styles' ], 998 );
+		add_action( 'wp_enqueue_scripts', [ $obj, 'enqueue_scripts' ], 998 );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Live_Copy {
 	 * @return void
 	 */
 	public function enqueue_styles() {
-		wp_register_style( 'live-copy-style', LIVE_COPY_ASSETS_URL . 'css/style.css', array(), LIVE_COPY_VER, 'all' );
+		wp_register_style( 'live-copy-style', LIVE_COPY_ASSETS_URL . 'css/style.css', [], LIVE_COPY_VER, 'all' );
 		wp_enqueue_style( 'live-copy-style' );
 	}
 
@@ -61,17 +61,17 @@ class Live_Copy {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_register_script( 'live-copy-script', LIVE_COPY_ASSETS_URL . 'js/script.js', array( 'jquery' ), LIVE_COPY_VER, true );
+		wp_register_script( 'live-copy-script', LIVE_COPY_ASSETS_URL . 'js/script.js', [ 'jquery' ], LIVE_COPY_VER, true );
 		wp_enqueue_script( 'live-copy-script' );
 		wp_localize_script(
 			'live-copy-script',
 			'ElLiveCopyData',
-			array(
+			[
 				'enable'   => true,
 				'post_id'  => get_the_ID(),
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce'    => wp_create_nonce( 'el-live-copy-nonce' ),
-			)
+			]
 		);
 	}
 
@@ -85,9 +85,9 @@ class Live_Copy {
 	private function find_element_recursive( $elements, $form_id ) {
 		foreach ( $elements as $element ) {
 			if ( $form_id === $element['id'] ) {
-				$section_data             = array();
-				$section_data['elements'] = array( $element );
-				$meta_data                = array();
+				$section_data             = [];
+				$section_data['elements'] = [ $element ];
+				$meta_data                = [];
 				$meta_data['type']        = 'elementor';
 				$meta_data['siteurl']     = get_rest_url();
 				$section_data             = array_merge( $meta_data, $section_data );
@@ -105,33 +105,33 @@ class Live_Copy {
 	 */
 	public function get_live_copy_data() {
 		if ( ! isset( $_REQUEST ) ) {
-      wp_send_json_error( array( 'message' => __( 'Invalid request!', 'live-copy-paste' ) ) );
-    }
-    $post_id   = isset( $_REQUEST['post_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) : false; // 7.
-    $widget_id = isset( $_REQUEST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['widget_id'] ) ) : false; // b0ec141.
-    $nonce     = isset( $_REQUEST['_wp_nonce'] ) ? wp_unslash( $_REQUEST['_wp_nonce'] ) : '';
-    $nonce     = isset( $_REQUEST['_wp_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wp_nonce'] ) ) : '';
+			wp_send_json_error( [ 'message' => __( 'Invalid request!', 'live-copy' ) ] );
+		}
+		$post_id   = isset( $_REQUEST['post_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) : false; // 7.
+		$widget_id = isset( $_REQUEST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['widget_id'] ) ) : false; // b0ec141.
+		$nonce     = isset( $_REQUEST['_wp_nonce'] ) ? wp_unslash( $_REQUEST['_wp_nonce'] ) : '';
+		$nonce     = isset( $_REQUEST['_wp_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wp_nonce'] ) ) : '';
 
-    // if ( ! wp_verify_nonce( $nonce, 'el-live-copy-nonce' ) ) {
-    //   wp_send_json_error( array( 'message' => __( 'Sorry, invalid nonce!', 'live-copy-paste' ) ) );
-    // }
+		// if ( ! wp_verify_nonce( $nonce, 'el-live-copy-nonce' ) ) {
+		// wp_send_json_error( array( 'message' => __( 'Sorry, invalid nonce!', 'live-copy' ) ) );
+		// }
 
-    $result = $this->get_live_copy_data_settings( $post_id, $widget_id );
+		$result = $this->get_live_copy_data_settings( $post_id, $widget_id );
 
-    if ( is_wp_error( $result ) ) {
-      $errors = $result->get_error_message();
-      wp_send_json_error( array( 'message' => $errors ) );
-    } else {
-      define(
-        'PLUGIN_DIR_URL',
-        plugin_dir_url( __FILE__ ) . '/assets/'
-      );
-      $data = array(
-        'widget' => $result,
-      );
-      wp_send_json_success( $data );
-    }
-    wp_die();
+		if ( is_wp_error( $result ) ) {
+			$errors = $result->get_error_message();
+			wp_send_json_error( [ 'message' => $errors ] );
+		} else {
+			define(
+				'PLUGIN_DIR_URL',
+				plugin_dir_url( __FILE__ ) . '/assets/'
+			);
+			$data = [
+				'widget' => $result,
+			];
+			wp_send_json_success( $data );
+		}
+		wp_die();
 	}
 
 	/**
@@ -149,14 +149,14 @@ class Live_Copy {
 		$page_meta = $elementor->documents->get( $post_id );
 
 		if ( ! $page_meta ) {
-			$errors->add( 'msg', __( 'Invalid Post or Page ID.', 'live-copy-paste' ) );
+			$errors->add( 'msg', __( 'Invalid Post or Page ID.', 'live-copy' ) );
 			return $errors;
 		}
 
 		$meta_data = $page_meta->get_elements_data();
 
 		if ( ! $meta_data ) {
-			$errors->add( 'msg', __( 'Page page is not under elementor.', 'live-copy-paste' ) );
+			$errors->add( 'msg', __( 'Page page is not under elementor.', 'live-copy' ) );
 			return $errors;
 		}
 
