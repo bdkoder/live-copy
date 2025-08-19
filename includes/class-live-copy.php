@@ -123,7 +123,7 @@ class Live_Copy {
 			wp_send_json_error( [ 'message' => $errors ] );
 		} else {
 			define(
-				'PLUGIN_DIR_URL',
+				'LIVE_COPY_DIR_URL',
 				plugin_dir_url( __FILE__ ) . '/assets/'
 			);
 			$data = [

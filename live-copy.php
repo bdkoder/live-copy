@@ -1,9 +1,8 @@
 <?php
 /**
  * Plugin Name:       Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer
- * Plugin URI:        https://github.com/bdkoder
  * Description:       Live Copy Paste for Elementor. Copy and paste any element from one site to another site.
- * Version:           1.0.12
+ * Version:           1.0.13
  * Requires at least: 5.0
  * Requires PHP:      7.4
  * Author:            Shahidul Islam
@@ -20,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action('plugin_loaded', function () {
 });
 
-define( 'LIVE_COPY_VER', '1.0.12' );
+define( 'LIVE_COPY_VER', '1.0.13' );
 define( 'LIVE_COPY__FILE__', __FILE__ );
 define( 'LIVE_COPY_URL', plugins_url( '/', LIVE_COPY__FILE__ ) );
 define( 'LIVE_COPY_ASSETS_URL', LIVE_COPY_URL . 'assets/' );

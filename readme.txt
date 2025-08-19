@@ -1,6 +1,6 @@
 === Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer ===
 Plugin Name: Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer
-Version: 1.0.12
+Version: 1.0.13
 Author: bdkoder
 Author URI: https://github.com/bdkoder
 Contributors: bdkoder, wowdevs
@@ -9,7 +9,7 @@ Donate link: https://github.com/bdkoder
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.12
+Stable tag: 1.0.13
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -128,6 +128,10 @@ Yes, Live Copy Paste maintains all custom styling, CSS modifications, animations
 🚀 **Stay ahead with the latest features!** Upgrading Live Copy Paste is quick and seamless. Each update brings enhanced performance, new capabilities, and improved compatibility.
 
 == Changelog ==
+
+= 1.0.13 [19th August 2025] =
+
+* System improved
 
 = 1.0.12 [16th August 2025] =
 
