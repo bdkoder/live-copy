@@ -44,6 +44,7 @@ module.exports = function (grunt) {
         my_target: {
           files: {
             'assets/js/script.js': ['src/js/script.js'],
+            'assets/js/editor.js': ['src/js/editor.js'],
           }
         }
       },

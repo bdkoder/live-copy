@@ -28,6 +28,9 @@ class Live_Copy {
 
 		// Mark elements that opted in so the front-end can target them.
 		add_action( 'elementor/frontend/before_render', [ $this, 'mark_enabled_element' ] );
+
+		// Enqueue editor script for paste validation.
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 	}
 
 	/**
@@ -77,6 +80,16 @@ class Live_Copy {
 		if ( 'yes' === $element->get_settings_for_display( 'ellc_enable' ) ) {
 			$element->add_render_attribute( '_wrapper', 'class', 'ellc-enabled' );
 		}
+	}
+
+	public function enqueue_editor_scripts() {
+		wp_enqueue_script(
+			'live-copy-editor',
+			LIVE_COPY_ASSETS_URL . 'js/editor.js',
+			[ 'jquery' ],
+			LIVE_COPY_VER,
+			true
+		);
 	}
 
 	public static function enqueue_assets() {

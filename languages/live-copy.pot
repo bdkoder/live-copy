@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-13T20:10:26+00:00\n"
+"POT-Creation-Date: 2026-06-13T20:15:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: live-copy\n"
@@ -47,72 +47,72 @@ msgid "Live Copy Settings"
 msgstr ""
 
 #: includes/class-live-copy-settings.php:75
-#: includes/class-live-copy.php:49
-#: includes/class-live-copy.php:143
+#: includes/class-live-copy.php:52
+#: includes/class-live-copy.php:156
 msgid "Live Copy"
 msgstr ""
 
-#: includes/class-live-copy.php:57
+#: includes/class-live-copy.php:60
 msgid "Show Live Copy Button"
 msgstr ""
 
-#: includes/class-live-copy.php:59
+#: includes/class-live-copy.php:62
 msgid "Yes"
 msgstr ""
 
-#: includes/class-live-copy.php:60
+#: includes/class-live-copy.php:63
 msgid "No"
 msgstr ""
 
-#: includes/class-live-copy.php:63
+#: includes/class-live-copy.php:66
 msgid "Only used when \"Specific Section Mode\" is enabled in Settings → Live Copy."
 msgstr ""
 
-#: includes/class-live-copy.php:144
+#: includes/class-live-copy.php:157
 msgid "Download JSON"
 msgstr ""
 
-#: includes/class-live-copy.php:145
+#: includes/class-live-copy.php:158
 msgid "How it works"
 msgstr ""
 
-#: includes/class-live-copy.php:146
+#: includes/class-live-copy.php:159
 msgid "Copied!"
 msgstr ""
 
-#: includes/class-live-copy.php:147
+#: includes/class-live-copy.php:160
 msgid "Downloaded!"
 msgstr ""
 
-#: includes/class-live-copy.php:148
+#: includes/class-live-copy.php:161
 msgid "Failed"
 msgstr ""
 
-#: includes/class-live-copy.php:172
+#: includes/class-live-copy.php:185
 msgid "Security check failed. Please retry."
 msgstr ""
 
-#: includes/class-live-copy.php:184
+#: includes/class-live-copy.php:197
 msgid "Missing required parameters."
 msgstr ""
 
-#: includes/class-live-copy.php:190
-#: includes/class-live-copy.php:253
+#: includes/class-live-copy.php:203
+#: includes/class-live-copy.php:266
 msgid "Invalid Post or Page ID."
 msgstr ""
 
-#: includes/class-live-copy.php:195
+#: includes/class-live-copy.php:208
 msgid "Access denied."
 msgstr ""
 
-#: includes/class-live-copy.php:245
+#: includes/class-live-copy.php:258
 msgid "Elementor is not active."
 msgstr ""
 
-#: includes/class-live-copy.php:260
+#: includes/class-live-copy.php:273
 msgid "Page is not built with Elementor."
 msgstr ""
 
-#: includes/class-live-copy.php:267
+#: includes/class-live-copy.php:280
 msgid "Section not found."
 msgstr ""
