@@ -49,6 +49,12 @@ class Live_Copy_DB {
 		if ( get_option( self::TABLE_VERSION_OPT ) !== self::TABLE_VERSION ) {
 			self::create_table();
 		}
+
+		// Ensure the pruning cron exists on every site (covers multisite subsites,
+		// where the activation hook only scheduled the activating site).
+		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
+			wp_schedule_event( time(), 'daily', self::CRON_HOOK );
+		}
 	}
 
 	/**
@@ -78,10 +84,23 @@ class Live_Copy_DB {
 	}
 
 	private static function get_ip() {
+		$mode = Live_Copy_Settings::get_all()['ip_logging'];
+
+		if ( 'none' === $mode ) {
+			return '';
+		}
+
 		// REMOTE_ADDR is the only trustworthy source without a reverse-proxy allowlist.
-		return isset( $_SERVER['REMOTE_ADDR'] )
+		$ip = isset( $_SERVER['REMOTE_ADDR'] )
 			? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
 			: '';
+
+		// GDPR-friendly default: mask the host portion (last IPv4 octet / IPv6 tail).
+		if ( 'anonymized' === $mode && $ip && function_exists( 'wp_privacy_anonymize_ip' ) ) {
+			$ip = wp_privacy_anonymize_ip( $ip );
+		}
+
+		return $ip;
 	}
 
 	/**
@@ -212,6 +231,36 @@ class Live_Copy_DB {
 
 		return (int) $wpdb->query(
 			$wpdb->prepare( "DELETE FROM `{$table}` WHERE created_at < %s", $cutoff )
+		);
+	}
+
+	/** Delete all history rows (Reports → Clear data). Returns rows removed. */
+	public static function clear_all() {
+		global $wpdb;
+		$table = self::get_table_name();
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+		return (int) $wpdb->query( "DELETE FROM `{$table}`" );
+	}
+
+	/**
+	 * Rows for CSV export, newest first, capped.
+	 *
+	 * @param int $limit Max rows (1–50000).
+	 * @return array
+	 */
+	public static function get_all_rows( $limit = 5000 ) {
+		global $wpdb;
+		$table = self::get_table_name();
+		$limit = max( 1, min( (int) $limit, 50000 ) );
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT id, page_id, page_slug, section_id, action_type, user_id, ip_address, created_at
+				 FROM `{$table}` ORDER BY id DESC LIMIT %d",
+				$limit
+			),
+			ARRAY_A
 		);
 	}
 

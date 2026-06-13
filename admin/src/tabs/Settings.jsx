@@ -88,6 +88,21 @@ export default function Settings() {
             <option value="editors">Editors & Admins only</option>
           </select>
         </Row>
+
+        <Row
+          label="IP Logging"
+          hint="How visitor IPs are stored in the analytics log. Anonymized masks the host part (GDPR-friendly)."
+        >
+          <select
+            value={form.ip_logging || 'anonymized'}
+            onChange={e => set('ip_logging', e.target.value)}
+            className="border border-gray-200 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-wp-blue"
+          >
+            <option value="anonymized">Anonymized (recommended)</option>
+            <option value="full">Full IP</option>
+            <option value="none">Don't log IP</option>
+          </select>
+        </Row>
       </div>
 
       <div className="lc-card">

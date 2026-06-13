@@ -21,3 +21,5 @@ async function apiFetch(path, options = {}) {
 export const getSettings = ()       => apiFetch('/settings')
 export const saveSettings = (data)  => apiFetch('/settings', { method: 'POST', body: JSON.stringify(data) })
 export const getStats = (days = 30) => apiFetch(`/stats?days=${days}`)
+export const clearStats = ()        => apiFetch('/stats/clear', { method: 'POST' })
+export const exportRows = ()        => apiFetch('/export')

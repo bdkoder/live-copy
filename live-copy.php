@@ -54,18 +54,28 @@ add_action( 'plugins_loaded', [ \ElementorLiveCopy\Live_Copy_DB::class, 'maybe_u
 add_action( 'admin_menu',            [ \ElementorLiveCopy\Live_Copy_Settings::class, 'register_admin_page' ] );
 add_action( 'admin_enqueue_scripts', [ \ElementorLiveCopy\Live_Copy_Settings::class, 'enqueue_admin_assets' ] );
 
-// Front-end: enqueue assets and AJAX handlers.
+// Front-end: enqueue assets.
 add_action( 'wp', function () {
-	if ( defined( 'SKY_ADDONS_SITE' ) ) {
-		if ( is_home() ) {
-			return;
-		}
-		if ( is_page( [ 6, 205, 'elementor-widgets', 'elementor-templates', 'pricing', 'roadmaps', 'changelog' ] ) ) {
-			return;
-		}
+	if ( is_admin() ) {
+		return;
 	}
 
-	if ( is_admin() ) {
+	/**
+	 * Filter whether Live Copy assets load on the current request.
+	 *
+	 * Return false to disable the copy/download buttons on specific pages or
+	 * contexts. Example — disable on the blog home and a few pages:
+	 *
+	 *     add_filter( 'live_copy_should_load', function ( $load ) {
+	 *         if ( is_home() || is_page( [ 'pricing', 'changelog' ] ) ) {
+	 *             return false;
+	 *         }
+	 *         return $load;
+	 *     } );
+	 *
+	 * @param bool $load Whether to load. Default true.
+	 */
+	if ( ! apply_filters( 'live_copy_should_load', true ) ) {
 		return;
 	}
 

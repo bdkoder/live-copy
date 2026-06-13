@@ -10,15 +10,15 @@ Shipped:
 - React admin panel under Settings → Live Copy (item 1)
 - Permission controls: everyone / logged-in / editors (item 2)
 - Mobile disable, JS + `wp_is_mobile()` (item 5)
-- Hardened AJAX: post-status + login validation, input allowlisting (item 6, partial)
+- Hardened AJAX: nonce verify + cache-safe refresh, post-status + login validation, input allowlisting (item 6)
 - Custom history table + Reports tab: copies/downloads, top pages, top sections, daily chart
 - Page slug + page ID stored per action
+- Per-section enable toggle wired (item 3 — Elementor Advanced-tab `ellc_enable` switcher → `ellc-enabled` class)
+- Nested-container detection + dynamic-content MutationObserver (item 7)
+- `live_copy_should_load` filter for developer page exclusions
 
 Still missing:
-- Per-section enable toggle (item 3 — `specific_section_mode` stored but not wired)
 - Page/post duplicator (item 4)
-- Inner-container visibility edge cases (item 7)
-- History-table pruning / retention cron
 
 ## Feature Gaps vs Market (Priority Order)
 
@@ -29,7 +29,7 @@ These are table-stakes features that users expect. Ship these before marketing.
 ---
 
 **1. Admin Settings Panel**
-- Location: `Elementor > Settings > Live Copy Paste` tab (use `elementor/settings/controls/` action)
+- Location: `Settings → Live Copy` (WP options page; React app) — DONE, shipped in 1.1.0
 - Settings to expose:
   - Enable/disable magic copy buttons globally
   - Visibility: Everyone / Logged-in users only / Specific roles

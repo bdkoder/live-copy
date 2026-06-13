@@ -112,7 +112,11 @@ Yes. Under **Settings → Live Copy** you can show the buttons to everyone, to l
 
 = What does the analytics dashboard track? =
 
-Each copy and download is recorded so the Reports tab can show totals, top pages (with quick links), top sections, and a daily activity chart. For each action it stores the page ID, page slug, page title, the section ID, the user ID (if logged in), the visitor IP address, and a timestamp. Records older than 180 days are automatically deleted.
+Each copy and download is recorded so the Reports tab can show totals, top pages (with quick links), top sections, and a daily activity chart. For each action it stores the page ID, page slug, page title, the section ID, the user ID (if logged in), the visitor IP address, and a timestamp. By default the IP is **anonymized** (you can switch to full or off in settings). Records older than 180 days are automatically deleted, and you can export the full log to CSV from the Reports tab.
+
+= How do I clear or reset the analytics data? =
+
+Clearing is intentionally locked down so it can't be wiped by accident. Add `define( 'LIVE_COPY_ALLOW_CLEAR', true );` to your `wp-config.php`, then a **Clear data** button appears on the Reports tab. Without that constant the button stays disabled (and the action is blocked on the server too). Exporting to CSV is always available.
 
 = Do the buttons work on mobile? =
 
@@ -132,7 +136,7 @@ Yes. All strings are internationalized and a `.pot` file is included.
 
 == Privacy ==
 
-This plugin stores a usage log in your own database (a custom table) to power the analytics dashboard. Each copy/download record includes the page ID, page slug, page title, section ID, the acting user ID where available, the visitor's IP address, and a timestamp. No data is sent to any third party. Records are pruned automatically after 180 days.
+This plugin stores a usage log in your own database (a custom table) to power the analytics dashboard. Each copy/download record includes the page ID, page slug, page title, section ID, the acting user ID where available, the visitor's IP address, and a timestamp. The IP is anonymized by default (configurable: full, anonymized, or not stored). No data is sent to any third party. Records are pruned automatically after 180 days and can be exported to CSV. Your data is kept even when the plugin is deleted — it is only removed on uninstall if you opt in with `define( 'LIVE_COPY_ALLOW_CLEAR', true );` in wp-config.php.
 
 == Changelog ==
 
@@ -147,6 +151,13 @@ This plugin stores a usage log in your own database (a custom table) to power th
 * Added: Copy & download history with page ID, page slug, and page title
 * Added: Automatic 180-day history cleanup to keep the database lean
 * Added: Buttons now also appear on dynamically loaded content (popups, AJAX, lazy sections)
+* Added: Per-section opt-in toggle in the Elementor Advanced tab (for Specific Section Mode)
+* Added: IP logging control — anonymized (default), full, or off — for GDPR-friendly analytics
+* Added: Export analytics to CSV, plus guarded "Clear data" (requires a wp-config constant)
+* Added: Translatable frontend button labels and messages
+* Added: Clean uninstall — removes the data table, options, and cron on delete
+* Improved: Developer `live_copy_should_load` filter to disable buttons per page/context
+* Improved: Multisite-safe table creation and cron scheduling
 * Improved: Nonce (CSRF) verification with automatic, cache-safe token refresh
 * Improved: Reliable copying of deeply nested containers and inner sections
 * Improved: Confirmation shown as a clean tooltip instead of button text

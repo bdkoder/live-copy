@@ -1,5 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { getStats } from '../api'
+import { getStats, clearStats, exportRows } from '../api'
+
+const CSV_COLUMNS = ['id', 'page_id', 'page_slug', 'section_id', 'action_type', 'user_id', 'ip_address', 'created_at']
+
+function toCsv(rows) {
+  const esc = (v) => {
+    const s = v == null ? '' : String(v)
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s
+  }
+  const head = CSV_COLUMNS.join(',')
+  const body = rows.map(r => CSV_COLUMNS.map(c => esc(r[c])).join(',')).join('\n')
+  return head + '\n' + body
+}
 
 // value 0 = all time
 const DAYS_OPTIONS = [
@@ -163,6 +175,8 @@ export default function Reports() {
   const [loading, setLoading] = useState(true)
   const [error, setError]   = useState(null)
 
+  const [busy, setBusy] = useState(false)
+
   const load = useCallback(async (d) => {
     setLoading(true)
     setError(null)
@@ -178,14 +192,51 @@ export default function Reports() {
 
   useEffect(() => { load(days) }, [days, load])
 
+  const handleExport = async () => {
+    setBusy(true)
+    setError(null)
+    try {
+      const { rows } = await exportRows()
+      if (!rows || !rows.length) { setError('No data to export.'); return }
+      const blob = new Blob([toCsv(rows)], { type: 'text/csv' })
+      const url  = URL.createObjectURL(blob)
+      const a    = document.createElement('a')
+      a.href = url
+      a.download = 'live-copy-history.csv'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const handleClear = async () => {
+    // eslint-disable-next-line no-alert
+    if (!window.confirm('Delete all copy/download history? This cannot be undone.')) return
+    setBusy(true)
+    setError(null)
+    try {
+      await clearStats()
+      await load(days)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
   const totalsMap = Object.fromEntries((data?.totals || []).map(r => [r.action_type, Number(r.total)]))
   const totalCopies    = totalsMap.copy     || 0
   const totalDownloads = totalsMap.download || 0
 
   return (
     <div className="space-y-6">
-      {/* Day filter */}
-      <div className="flex items-center gap-2">
+      {/* Day filter + actions */}
+      <div className="flex items-center gap-2 flex-wrap">
         <span className="text-sm text-gray-500">Period:</span>
         {DAYS_OPTIONS.map(d => (
           <button
@@ -197,6 +248,25 @@ export default function Reports() {
           </button>
         ))}
         {loading && <span className="text-xs text-gray-400 ml-2">Loading…</span>}
+
+        <span className="flex-1" />
+        <button onClick={handleExport} disabled={busy} className="lc-btn-secondary text-xs">Export CSV</button>
+        {window.liveCopyAdmin.canClear ? (
+          <button
+            onClick={handleClear}
+            disabled={busy}
+            className="lc-btn text-xs bg-red-50 text-red-600 hover:bg-red-100"
+          >
+            Clear data
+          </button>
+        ) : (
+          <span
+            className="text-xs text-gray-400"
+            title="Add define( 'LIVE_COPY_ALLOW_CLEAR', true ); to wp-config.php to enable clearing."
+          >
+            Clear data 🔒
+          </span>
+        )}
       </div>
 
       {error && (

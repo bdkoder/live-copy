@@ -107,5 +107,6 @@ Buttons are SVG icons (no text). Feedback is a tooltip via `flashTip()`: loading
 
 - `widget_id` = Elementor element ID string, not a WP post ID.
 - Opt-out: class `magic-button-disabled-yes` on the Elementor wrapper.
-- `SKY_ADDONS_SITE` constant skips asset loading on specific pages (skyaddons.com deploy detail).
+- Asset loading can be disabled per page/context via the `live_copy_should_load` filter (return false). No hardcoded page exclusions.
+- **Specific Section Mode** (setting): when on, buttons attach only to elements with class `ellc-enabled` — added by the per-element "Show Live Copy Button" switcher in the Elementor Advanced tab (`ellc_enable` control → `mark_enabled_element` render attribute).
 - Visibility gate (`everyone`/`logged_in`/`editors`) is enforced server-side in `enqueue_assets` — assets simply don't load for disallowed users.

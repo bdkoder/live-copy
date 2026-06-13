@@ -19,6 +19,64 @@ class Live_Copy {
 		// Legacy action kept for backward compat (maps to copy type).
 		add_action( 'wp_ajax_nopriv_ellc_copy_data', [ $this, 'handle_get_data' ] );
 		add_action( 'wp_ajax_ellc_copy_data',        [ $this, 'handle_get_data' ] );
+
+		// Per-element toggle in the Elementor editor (Advanced tab). These hooks
+		// only ever fire while Elementor is active — harmless if it is not.
+		add_action( 'elementor/element/section/section_advanced/after_section_end', [ $this, 'add_element_control' ], 10, 2 );
+		add_action( 'elementor/element/column/section_advanced/after_section_end', [ $this, 'add_element_control' ], 10, 2 );
+		add_action( 'elementor/element/container/section_layout/after_section_end', [ $this, 'add_element_control' ], 10, 2 );
+
+		// Mark elements that opted in so the front-end can target them.
+		add_action( 'elementor/frontend/before_render', [ $this, 'mark_enabled_element' ] );
+	}
+
+	/**
+	 * Add the "Show Live Copy Button" switcher to a section/column/container.
+	 * Used only when Specific Section Mode is enabled in Settings → Live Copy.
+	 *
+	 * @param \Elementor\Controls_Stack $element The element being edited.
+	 */
+	public function add_element_control( $element ) {
+		// Guard against double registration — the hook can fire more than once
+		// per element stack, which would trigger a "Cannot redeclare control" notice.
+		if ( method_exists( $element, 'get_controls' ) && $element->get_controls( 'ellc_enable' ) ) {
+			return;
+		}
+
+		$element->start_controls_section(
+			'ellc_section',
+			[
+				'label' => __( 'Live Copy', 'live-copy' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_ADVANCED,
+			]
+		);
+
+		$element->add_control(
+			'ellc_enable',
+			[
+				'label'        => __( 'Show Live Copy Button', 'live-copy' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Yes', 'live-copy' ),
+				'label_off'    => __( 'No', 'live-copy' ),
+				'return_value' => 'yes',
+				'default'      => '',
+				'description'  => __( 'Only used when "Specific Section Mode" is enabled in Settings → Live Copy.', 'live-copy' ),
+			]
+		);
+
+		$element->end_controls_section();
+	}
+
+	/**
+	 * Tag opted-in elements with the `ellc-enabled` class so the front-end
+	 * script can find them when Specific Section Mode is on.
+	 *
+	 * @param \Elementor\Element_Base $element Rendered element.
+	 */
+	public function mark_enabled_element( $element ) {
+		if ( 'yes' === $element->get_settings_for_display( 'ellc_enable' ) ) {
+			$element->add_render_attribute( '_wrapper', 'class', 'ellc-enabled' );
+		}
 	}
 
 	public static function enqueue_assets() {
@@ -78,8 +136,17 @@ class Live_Copy {
 				'show_copy'      => (bool) $settings['show_copy_btn'],
 				'show_download'  => (bool) $settings['show_download_btn'],
 				'disable_mobile' => (bool) $settings['disable_on_mobile'],
+				'specific_mode'  => (bool) $settings['specific_section_mode'],
 				'help_url'       => $help_url,
 				'help_ver'       => $help_ver,
+				'i18n'           => [
+					'live_copy'  => __( 'Live Copy', 'live-copy' ),
+					'download'   => __( 'Download JSON', 'live-copy' ),
+					'how'        => __( 'How it works', 'live-copy' ),
+					'copied'     => __( 'Copied!', 'live-copy' ),
+					'downloaded' => __( 'Downloaded!', 'live-copy' ),
+					'failed'     => __( 'Failed', 'live-copy' ),
+				],
 			]
 		);
 	}

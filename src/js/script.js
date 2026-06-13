@@ -33,6 +33,12 @@
       '<polyline points="20 6 9 17 4 12"/></svg>',
   };
 
+  // ── i18n (localized, with English fallbacks) ────────────────────────────────
+  var I18N = ElLiveCopyData.i18n || {};
+  function t(key, fallback) {
+    return I18N[key] || fallback;
+  }
+
   // ── Cookie helpers ────────────────────────────────────────────────────────
   function getCookie(name) {
     var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
@@ -86,15 +92,19 @@
       var showDownload = ElLiveCopyData.show_download !== false;
       var help         = this._helpUrl;
 
+      var tCopy = t('live_copy', 'Live Copy');
+      var tDl   = t('download', 'Download JSON');
+      var tHow  = t('how', 'How it works');
+
       var html = '<div class="ellc-magic-copy-wrapper" role="group" aria-label="Live Copy actions">';
       if (showCopy) {
-        html += '<a href="#" role="button" class="ellc-btn ellc-copy-btn" data-tip="Live Copy" aria-label="Copy this section">' + ICONS.copy + '</a>';
+        html += '<a href="#" role="button" class="ellc-btn ellc-copy-btn" data-tip="' + tCopy + '" aria-label="' + tCopy + '">' + ICONS.copy + '</a>';
       }
       if (showDownload) {
-        html += '<a href="#" role="button" class="ellc-btn ellc-download-btn" data-tip="Download JSON" aria-label="Download this section as JSON">' + ICONS.download + '</a>';
+        html += '<a href="#" role="button" class="ellc-btn ellc-download-btn" data-tip="' + tDl + '" aria-label="' + tDl + '">' + ICONS.download + '</a>';
       }
       var infoAttrs = help ? ' href="' + help + '" target="_blank" rel="noopener noreferrer"' : ' href="#"';
-      html += '<a class="ellc-btn ellc-info-btn" data-tip="How it works"' + infoAttrs + ' aria-label="How Live Copy works">' + ICONS.info + '</a>';
+      html += '<a class="ellc-btn ellc-info-btn" data-tip="' + tHow + '"' + infoAttrs + ' aria-label="' + tHow + '">' + ICONS.info + '</a>';
       html += '</div>';
       return html;
     },
@@ -106,6 +116,7 @@
         return;
       }
 
+      var specific  = ElLiveCopyData.specific_mode === true;
       var panelHtml = this.buildPanel();
 
       this._elItem.each(function () {
@@ -113,6 +124,10 @@
         var $doc = $el.closest('[data-elementor-type="wp-page"], [data-elementor-type="wp-post"]');
 
         if ($doc.length === 0 || $doc.hasClass('magic-button-disabled-yes')) {
+          return;
+        }
+        // Specific Section Mode: only elements opted-in via the Elementor editor.
+        if (specific && !$el.hasClass('ellc-enabled')) {
           return;
         }
         // attr (not .data) — keeps all-digit Elementor ids as strings, uncached.
@@ -184,12 +199,12 @@
 
     fetchData: function (widget_id, action_type, $btn, onData, isRetry) {
       var retryWithFreshNonce = function () {
-        if (isRetry) { El_Live_Copy.flashTip($btn, 'Failed', false); return; }
+        if (isRetry) { El_Live_Copy.flashTip($btn, t('failed', 'Failed'), false); return; }
         El_Live_Copy.refreshNonce(function (ok) {
           if (ok) {
             El_Live_Copy.fetchData(widget_id, action_type, $btn, onData, true);
           } else {
-            El_Live_Copy.flashTip($btn, 'Failed', false);
+            El_Live_Copy.flashTip($btn, t('failed', 'Failed'), false);
           }
         });
       };
@@ -219,7 +234,7 @@
           retryWithFreshNonce();
           return;
         }
-        El_Live_Copy.flashTip($btn, 'Failed', false);
+        El_Live_Copy.flashTip($btn, t('failed', 'Failed'), false);
       }).fail(function (jqXHR) {
         $btn.removeClass('ellc-loading');
         // 403 = nonce rejected (commonly a cached page) → refresh + retry once.
@@ -228,7 +243,7 @@
           retryWithFreshNonce();
           return;
         }
-        El_Live_Copy.flashTip($btn, 'Failed', false);
+        El_Live_Copy.flashTip($btn, t('failed', 'Failed'), false);
       });
     },
 
@@ -248,7 +263,7 @@
           textarea.select();
           try { document.execCommand('copy'); } catch (err) {}
           document.body.removeChild(textarea);
-          El_Live_Copy.flashTip($btn, 'Copied!', true);
+          El_Live_Copy.flashTip($btn, t('copied', 'Copied!'), true);
         });
       });
     },
@@ -270,7 +285,7 @@
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
-          El_Live_Copy.flashTip($btn, 'Downloaded!', true);
+          El_Live_Copy.flashTip($btn, t('downloaded', 'Downloaded!'), true);
         });
       });
     },

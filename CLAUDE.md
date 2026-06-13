@@ -36,7 +36,7 @@ Both `assets/` and `admin/build/` are committed so the shipped plugin needs no b
 - Defines constants (`LIVE_COPY_VER`, `LIVE_COPY_PATH`, `LIVE_COPY_URL`, `LIVE_COPY_ASSETS_URL`, `LIVE_COPY_ADMIN_URL`)
 - `register_activation_hook` → creates the history DB table; `plugins_loaded` → `Live_Copy_DB::maybe_upgrade()`
 - `Live_Copy_Rest::init()` registers REST routes; `admin_menu`/`admin_enqueue_scripts` wire the settings page
-- `wp` action → `Live_Copy::enqueue_assets()` (skips admin + `SKY_ADDONS_SITE` pages, gated by user permission)
+- `wp` action → `Live_Copy::enqueue_assets()` (skips admin, gated by user permission and the `live_copy_should_load` filter)
 - Instantiates `\ElementorLiveCopy\Live_Copy` unconditionally (AJAX hooks must register at load — `admin-ajax.php` never fires `wp`)
 
 **Four PHP classes** (`includes/`, `namespace ElementorLiveCopy`):
@@ -68,9 +68,13 @@ Deep-dive references in `.ai/skills/`:
 
 - **Nonce IS verified** in the `ellc_get_data` AJAX handler (`el-live-copy-nonce`). Cached pages can serve a stale nonce → 403; the front-end auto-fetches a fresh one from the public `live-copy/v1/nonce` REST route and retries once. Access is further gated by post-status (`publish`/`private`) + login for private posts. The endpoint only returns already-public page JSON.
 - `find_element_recursive()` is genuinely recursive — buttons attach to nested containers, so a top-level-only scan would 404 them. Keep it recursive.
-- The `SKY_ADDONS_SITE` constant check in `live-copy.php` is a skyaddons.com–specific page exclusion; don't remove it without understanding the deployment context.
+- To disable buttons on specific pages, use the `live_copy_should_load` filter (return false) — there are no hardcoded page exclusions.
+- **Elementor-safe:** the plugin never fatals if Elementor is deactivated/deleted. `use Elementor\Plugin` is an alias only; `elementor/*` hooks no-op when the action never fires; `Plugin::$instance` is guarded by `class_exists('\Elementor\Plugin')`. With Elementor gone: no `[data-elementor-type]` nodes → no buttons; direct AJAX → graceful WP_Error; admin/reports still work.
 - Legacy AJAX action `ellc_copy_data` is still registered (mapped to the same handler) for backward compatibility with older cached scripts. New code uses `ellc_get_data`.
-- `specific_section_mode` setting is **stored but not yet enforced** — the per-element Elementor control isn't built. See `.ai/skills/feature-plan.md` item 3.
+- `specific_section_mode` is wired end-to-end: `ellc_enable` switcher in the Elementor Advanced tab → `ellc-enabled` class on render → JS attaches only to those elements when the setting is on.
 - History table is pruned to 180 days by a daily cron (`live_copy_prune_history`, `Live_Copy_DB::RETENTION_DAYS`). All-time reports are bounded by this window.
+- `uninstall.php` **keeps data by default**. It always clears the cron, but only deletes options + drops the history table when `LIVE_COPY_ALLOW_CLEAR` is defined truthy (same opt-in as the Clear-data action). Runs without plugin classes loaded, so names are hardcoded — keep them in sync with `Live_Copy_DB`/`Live_Copy_Settings` if renamed.
+- **Clear data is constant-gated:** the Reports "Clear data" action (REST `/stats/clear`) is blocked unless `LIVE_COPY_ALLOW_CLEAR` is defined truthy in wp-config.php — both server-side (403) and in the UI (`canClear`). Prevents accidental wipes.
+- **IP logging** honors the `ip_logging` setting (`full`/`anonymized`/`none`); default `anonymized` via `wp_privacy_anonymize_ip()`. Frontend JS strings are translatable through the `i18n` block in `ElLiveCopyData`.
 - Reports page links (`page_url`/`page_title`) are derived at read time via `get_permalink`/`get_the_title` — not stored — so they stay accurate after slug edits.
 - PHP coding standard: WordPress-Extra + WordPress-Core via PHPCS (`phpcs.xml`). Short array syntax `[]` enforced; long `array()` forbidden. Yoda conditions required. Strict comparisons (`===`/`!==`) enforced.

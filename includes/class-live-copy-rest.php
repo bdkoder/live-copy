@@ -65,6 +65,28 @@ class Live_Copy_Rest {
 				],
 			]
 		);
+
+		// Clear all history.
+		register_rest_route(
+			self::NS,
+			'/stats/clear',
+			[
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => [ __CLASS__, 'clear_stats' ],
+				'permission_callback' => [ __CLASS__, 'admin_only' ],
+			]
+		);
+
+		// Export history rows (client builds the CSV).
+		register_rest_route(
+			self::NS,
+			'/export',
+			[
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => [ __CLASS__, 'export_rows' ],
+				'permission_callback' => [ __CLASS__, 'admin_only' ],
+			]
+		);
 	}
 
 	/**
@@ -100,6 +122,25 @@ class Live_Copy_Rest {
 		$days = min( absint( $request->get_param( 'days' ) ), 3650 );
 
 		return rest_ensure_response( Live_Copy_DB::get_stats( $days ) );
+	}
+
+	public static function clear_stats() {
+		// Destructive — require an explicit opt-in constant in wp-config.php so a
+		// careless admin can't wipe analytics from the dashboard by accident.
+		if ( ! ( defined( 'LIVE_COPY_ALLOW_CLEAR' ) && LIVE_COPY_ALLOW_CLEAR ) ) {
+			return new \WP_Error(
+				'clear_disabled',
+				__( 'Clearing is disabled. Add define( \'LIVE_COPY_ALLOW_CLEAR\', true ); to wp-config.php to enable it.', 'live-copy' ),
+				[ 'status' => 403 ]
+			);
+		}
+
+		$deleted = Live_Copy_DB::clear_all();
+		return rest_ensure_response( [ 'deleted' => $deleted ] );
+	}
+
+	public static function export_rows() {
+		return rest_ensure_response( [ 'rows' => Live_Copy_DB::get_all_rows( 5000 ) ] );
 	}
 
 	public static function admin_only() {

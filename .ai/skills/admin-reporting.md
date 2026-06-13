@@ -24,7 +24,7 @@ Output committed to `admin/build/` so the shipped plugin needs no build step.
 
 ### `Live_Copy_Settings` (`includes/class-live-copy-settings.php`)
 - `OPT_KEY = 'live_copy_settings'` — single option array
-- Keys: `enable`, `visibility` (everyone|logged_in|editors), `show_copy_btn`, `show_download_btn`, `specific_section_mode`, `disable_on_mobile`, `help_url`
+- Keys: `enable`, `visibility` (everyone|logged_in|editors), `show_copy_btn`, `show_download_btn`, `specific_section_mode`, `disable_on_mobile`, `help_url`, `ip_logging` (full|anonymized|none, default anonymized)
 - `help_url` (`esc_url_raw`) feeds the frontend info icon; sent to JS only when the `ellc_help_url` cookie is absent (see `frontend-ui.md`)
 - `is_enabled_for_current_user()` — visibility gate used by frontend enqueue
 - `register_admin_page()` — `add_options_page`, hook = `settings_page_live-copy-settings`
@@ -38,7 +38,11 @@ Namespace `live-copy/v1` (admin routes `manage_options`; `/nonce` public):
 | `/settings` | GET | manage_options | current settings array |
 | `/settings` | POST | manage_options | saves + returns settings |
 | `/stats?days=N` | GET | manage_options | aggregate stats (N=0 all-time, else 1–3650) |
+| `/stats/clear` | POST | manage_options | wipes history — **also requires `LIVE_COPY_ALLOW_CLEAR` constant** (else 403) |
+| `/export` | GET | manage_options | up to 5000 raw rows; client builds the CSV |
 | `/nonce` | GET | **public** | `{ nonce }` — fresh `el-live-copy-nonce`, no-cache |
+
+`canClear` (= `defined('LIVE_COPY_ALLOW_CLEAR') && LIVE_COPY_ALLOW_CLEAR`) is passed to the admin app via `liveCopyAdmin`; the Clear button is hidden (shown locked) unless set. Server enforces it too. IP logging respects the `ip_logging` setting (`wp_privacy_anonymize_ip` for anonymized; empty for none).
 
 `/nonce` is intentionally public so cached-page copy/download can recover a valid CSRF token (`nocache_headers()` + `Cache-Control: no-store`).
 
@@ -102,5 +106,5 @@ tabs/Reports.jsx   stat cards + daily bar chart + top pages/sections tables + da
 
 ## Known Gaps (not yet wired)
 
-- `specific_section_mode` is **stored but not enforced** — the per-element Elementor Advanced-tab control + JS filtering are not built yet. Toggling it currently has no frontend effect. See `feature-plan.md` item 3.
+- `specific_section_mode` is **wired**: `Live_Copy` registers an `ellc_enable` switcher in the Elementor Advanced tab (section/column/container) and tags opted-in elements with class `ellc-enabled` via `elementor/frontend/before_render`. When the setting is on, JS attaches only to `.ellc-enabled` elements.
 - History retention is **180 days** (`Live_Copy_DB::RETENTION_DAYS`), enforced by the daily `live_copy_prune_history` cron. To keep data longer, raise the constant; All-time reports are bounded by it.

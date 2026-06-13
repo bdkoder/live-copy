@@ -20,6 +20,7 @@ class Live_Copy_Settings {
 			'specific_section_mode' => false,
 			'disable_on_mobile'     => true,
 			'help_url'              => '', // info button / "how it works" video link
+			'ip_logging'            => 'anonymized', // full | anonymized | none
 		];
 	}
 
@@ -30,6 +31,7 @@ class Live_Copy_Settings {
 
 	public static function save( array $data ) {
 		$allowed_visibility = [ 'everyone', 'logged_in', 'editors' ];
+		$allowed_ip         = [ 'full', 'anonymized', 'none' ];
 
 		$clean = [
 			'enable'                => ! empty( $data['enable'] ),
@@ -41,6 +43,9 @@ class Live_Copy_Settings {
 			'visibility'            => in_array( $data['visibility'] ?? 'everyone', $allowed_visibility, true )
 				? $data['visibility']
 				: 'everyone',
+			'ip_logging'            => in_array( $data['ip_logging'] ?? 'anonymized', $allowed_ip, true )
+				? $data['ip_logging']
+				: 'anonymized',
 		];
 
 		return update_option( self::OPT_KEY, $clean );
@@ -115,6 +120,7 @@ class Live_Copy_Settings {
 				'restUrl'  => rest_url(),
 				'nonce'    => wp_create_nonce( 'wp_rest' ),
 				'settings' => self::get_all(),
+				'canClear' => defined( 'LIVE_COPY_ALLOW_CLEAR' ) && LIVE_COPY_ALLOW_CLEAR,
 			]
 		);
 	}
