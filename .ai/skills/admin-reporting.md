@@ -57,31 +57,37 @@ Custom table `{prefix}live_copy_history`:
 | `section_id` | varchar(100) | Elementor element ID |
 | `action_type` | varchar(20) | `copy` \| `download`, indexed |
 | `user_id` | bigint nullable | |
-| `ip_address` | varchar(45) | `REMOTE_ADDR` only |
+| `ip_address` | varchar(45) | `REMOTE_ADDR`, per `ip_logging` setting |
 | `created_at` | datetime | UTC, indexed |
 
 - `create_table()` — `dbDelta`, run on `register_activation_hook`
-- `maybe_upgrade()` — option-version compare on `plugins_loaded`
-- `log($page_id, $page_slug, $section_id, $action_type)` — `$wpdb->insert` with format array
+- `maybe_upgrade()` — runs on `plugins_loaded` per site: version-compares the table AND ensures the prune cron is scheduled (covers multisite subsites the activation hook never touched)
+- `log(...)` — `$wpdb->insert`; `get_ip()` returns `''` (none), masked (anonymized, `wp_privacy_anonymize_ip`), or raw (full) per setting
 - `get_stats($days)` — returns `totals`, `top_pages`, `top_sections`, `daily`, `unique_pages`, `unique_sections`. All queries `$wpdb->prepare`'d.
 - `prune($days = RETENTION_DAYS)` — deletes rows older than the window. `RETENTION_DAYS = 180`.
+- `clear_all()` — deletes every row (Reports → Clear data). Returns count.
+- `get_all_rows($limit)` — newest-first rows for CSV export (capped 50000).
 
 **Page URL/title are derived, not stored.** `get_stats()` enriches each `top_pages`/`top_sections` row via `add_page_links()` → `page_url` (`get_permalink`) + `page_title` (`get_the_title`). Deriving keeps links accurate after slug/permalink edits; deleted pages resolve to empty `page_url` (rendered non-clickable). `top_sections` query selects `page_id` so the section's page can be linked.
 
 ### Retention Cron (`live-copy.php`)
-- Activation schedules daily `live_copy_prune_history` (`Live_Copy_DB::CRON_HOOK`)
+- Activation schedules daily `live_copy_prune_history` (`Live_Copy_DB::CRON_HOOK`); `maybe_upgrade()` re-ensures it per site (multisite-safe)
 - `add_action(CRON_HOOK, [Live_Copy_DB::class, 'prune'])`
 - Deactivation `wp_clear_scheduled_hook` (table + data kept)
+
+### Uninstall (`uninstall.php`)
+- **Data-safe by default.** Always clears the cron; deletes options + drops the table ONLY when `LIVE_COPY_ALLOW_CLEAR` is defined truthy (same opt-in as Clear data).
+- Runs without plugin classes — table/option names are hardcoded; keep in sync.
 
 ## React Files (`admin/src/`)
 
 ```
 index.jsx          mount into #live-copy-admin-root
 App.jsx            tab nav: Settings | Reports
-api.js             apiFetch wrapper (getSettings/saveSettings/getStats)
+api.js             apiFetch wrapper (getSettings/saveSettings/getStats/clearStats/exportRows)
 index.css          tailwind + .lc-card/.lc-btn/.lc-toggle helpers
-tabs/Settings.jsx  toggles + visibility select, REST save
-tabs/Reports.jsx   stat cards + daily bar chart + top pages/sections tables + day filter
+tabs/Settings.jsx  toggles + visibility + IP-logging selects, REST save
+tabs/Reports.jsx   stat cards + daily bar chart + top tables + filter + Export CSV / Clear data
 ```
 
 ## Reporting UI (Reports tab)
@@ -91,6 +97,8 @@ tabs/Reports.jsx   stat cards + daily bar chart + top pages/sections tables + da
 - Two tables: Top Pages (linked page), Top Sections (section_id + linked page)
 - `PageLink` renders `page_title` (fallback slug/id) as a `target="_blank"` link to `page_url` with a `↗` glyph; non-clickable when url empty
 - Period filter: 7 / 30 / 90 days / **All time** (All time = `days: 0`)
+- **Export CSV** (always available) — fetches `/export`, builds the CSV client-side as a Blob download
+- **Clear data** — shown only when `liveCopyAdmin.canClear`; otherwise rendered as a locked label with a tooltip pointing to the `LIVE_COPY_ALLOW_CLEAR` constant
 
 ### days=0 (All time) plumbing
 - `getStats(0)` → REST `validate_callback` allows `>= 0`; callback uses `absint` (no `?: 30` falsy trap)
@@ -101,10 +109,11 @@ tabs/Reports.jsx   stat cards + daily bar chart + top pages/sections tables + da
 
 - Every REST route gated by `current_user_can('manage_options')`
 - Admin nonce = `wp_create_nonce('wp_rest')`, verified by WP core via `X-WP-Nonce`
-- Settings save validates `visibility` against allowlist; all bools cast
-- Stats `days` param `absint` + range-validated (1–365)
+- Settings save validates `visibility` + `ip_logging` against allowlists; all bools cast
+- Stats `days` param `absint` + range-validated (0–3650; 0 = all time)
+- Destructive ops double-gated by `LIVE_COPY_ALLOW_CLEAR` (server 403 + hidden UI)
 
-## Known Gaps (not yet wired)
+## Behavior Notes
 
 - `specific_section_mode` is **wired**: `Live_Copy` registers an `ellc_enable` switcher in the Elementor Advanced tab (section/column/container) and tags opted-in elements with class `ellc-enabled` via `elementor/frontend/before_render`. When the setting is on, JS attaches only to `.ellc-enabled` elements.
 - History retention is **180 days** (`Live_Copy_DB::RETENTION_DAYS`), enforced by the daily `live_copy_prune_history` cron. To keep data longer, raise the constant; All-time reports are bounded by it.
