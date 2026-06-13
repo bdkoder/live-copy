@@ -13,7 +13,7 @@ Stable tag: 1.1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Copy or download any Elementor section as JSON and paste it on another site. Frontend icon buttons, role-based access, and a built-in copy analytics dashboard.
+Copy or download any Elementor section as JSON and paste it on another site. Frontend buttons, role-based access, and copy analytics dashboard.
 
 == Description ==
 

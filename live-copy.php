@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Live Copy & Download for Elementor – Cross-Domain Design Transfer
- * Description:       Copy or download any Elementor section as JSON and paste it on another site. Frontend icon buttons, role-based access, and a built-in copy analytics dashboard.
+ * Description:       Copy or download any Elementor section as JSON and paste it on another site. Frontend buttons, role-based access, and copy analytics dashboard.
  * Version:           1.1.0
  * Requires at least: 5.0
  * Requires PHP:      7.4
