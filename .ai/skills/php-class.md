@@ -47,6 +47,7 @@ static enqueue_assets()      — gated by Settings::is_enabled_for_current_user(
                                + wp_is_mobile() skip; then hooks enqueue methods
 enqueue_styles()             — style.css
 enqueue_scripts()            — script.js + localize ElLiveCopyData
+enqueue_editor_scripts()     — editor.js (paste interceptor)
 handle_get_data()            — unified AJAX handler (copy + download)
 get_live_copy_data_settings() — Elementor doc lookup (guards class_exists)
 find_element_recursive()     — match top-level element by id
@@ -83,11 +84,22 @@ ID compare is `(string)` cast on both sides (all-digit ids stay strings).
 
 ## Response Shape
 
+**For Copy Action:**
 ```json
 { "success": true, "data": { "widget": {
   "type": "elementor",
   "siteurl": "https://source-site.com/wp-json/",
   "elements": [ { ...elementor node... } ]
+} } }
+```
+
+**For Download Action:**
+```json
+{ "success": true, "data": { "widget": {
+  "version": "0.4",
+  "title": "Live Copy Element",
+  "type": "section",
+  "content": [ { ...elementor node... } ]
 } } }
 ```
 

@@ -86,10 +86,16 @@ $meta_data = $page_meta->get_elements_data();   // flat array
 $widget    = $this->find_element_recursive($meta_data, $widget_id);
 ```
 
-`find_element_recursive` matches top-level `$element['id']`, returns:
+`find_element_recursive` matches top-level `$element['id']`. The wrapper built in `get_live_copy_data_settings` depends on the `action_type`:
 
+For `copy` (Elementor cross-domain clipboard format):
 ```php
 [ 'type' => 'elementor', 'siteurl' => get_rest_url(), 'elements' => [$element] ]
+```
+
+For `download` (Elementor Template Library file format):
+```php
+[ 'version' => '0.4', 'title' => 'Live Copy Element', 'type' => $element['elType'], 'content' => [$element] ]
 ```
 
 ## 6. Activity Logging (`Live_Copy_DB::log`)
@@ -110,3 +116,12 @@ Buttons are SVG icons (no text). Feedback is a tooltip via `flashTip()`: loading
 - Asset loading can be disabled per page/context via the `live_copy_should_load` filter (return false). No hardcoded page exclusions.
 - **Specific Section Mode** (setting): when on, buttons attach only to elements with class `ellc-enabled` — added by the per-element "Show Live Copy Button" switcher in the Elementor Advanced tab (`ellc_enable` control → `mark_enabled_element` render attribute).
 - Visibility gate (`everyone`/`logged_in`/`editors`) is enforced server-side in `enqueue_assets` — assets simply don't load for disallowed users.
+
+## 8. Editor Paste Interception (`src/js/editor.js`)
+
+To handle cases where a user pastes a payload containing widgets not installed on the destination site (which would normally cause an unhandled Elementor editor crash):
+- An editor script (`assets/js/editor.js`) is enqueued via `elementor/editor/after_enqueue_scripts`.
+- It listens to the global `paste` event in the capture phase.
+- It parses the clipboard data looking for the Elementor cross-domain JSON payload (`data.type === 'elementor'`).
+- It recurses through the `elements` array and checks each `elType === 'widget'` against the site's `elementor.config.widgets`.
+- If missing widgets are detected, it blocks the paste (`event.preventDefault()`) and shows a native Elementor alert dialog (or standard `alert` fallback) listing the missing widget types.
