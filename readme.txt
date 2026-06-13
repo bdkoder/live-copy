@@ -1,13 +1,13 @@
 === Live Copy & Download for Elementor – Cross-Domain Design Transfer ===
 Plugin Name: Live Copy & Download for Elementor – Cross-Domain Design Transfer
 Version: 1.1.0
-Author: bdkoder
-Author URI: https://github.com/bdkoder
-Contributors: bdkoder, wowdevs
+Author: wowdevs
+Author URI: https://wowdevs.com
+Contributors: wowdevs, bdkoder
 Tags: elementor copy paste, cross domain, elementor addon, design transfer, website builder
-Donate link: https://github.com/bdkoder
+Donate link: https://buy.stripe.com/8x214f0XKf0cfop6a14wM02
 Requires at least: 5.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.1.0
 License: GPLv3 or later
