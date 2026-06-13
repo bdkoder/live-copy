@@ -1,133 +1,167 @@
-=== Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer ===
-Plugin Name: Live Copy Paste – Ultimate Elementor Cross-Domain Design Transfer
-Version: 1.0.13
+=== Live Copy & Download for Elementor – Cross-Domain Design Transfer ===
+Plugin Name: Live Copy & Download for Elementor – Cross-Domain Design Transfer
+Version: 1.1.0
 Author: bdkoder
 Author URI: https://github.com/bdkoder
 Contributors: bdkoder, wowdevs
-Tags: elementor copy paste, cross domain design, elementor workflow, page duplicator, design transfer
+Tags: elementor copy paste, cross domain, elementor addon, design transfer, website builder
 Donate link: https://github.com/bdkoder
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.13
+Stable tag: 1.1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-🎯 Instantly copy and paste Elementor designs across domains. Boost workflow, duplicate pages, and transfer layouts with perfect fidelity.
+Copy or download any Elementor section as JSON and paste it on another site. Frontend icon buttons, role-based access, and a built-in copy analytics dashboard.
 
 == Description ==
 
-🚀 **Supercharge Your Elementor Development Workflow**
+🚀 **Move Elementor designs between sites in seconds — copy to clipboard or download as a file.**
 
-Live Copy Paste is the ultimate productivity booster for WordPress professionals working with Elementor. Whether you're managing multiple client projects, building website templates, or streamlining your design process, this plugin eliminates the tedious export-import cycle and revolutionizes cross-domain design transfer.
+This plugin puts a sleek action panel right on your live pages. Hover any Elementor section or container and crisp icon buttons appear: **Copy** sends the design to your clipboard, **Download** saves it as a portable `.json` file. Paste it into any other Elementor site with the native "Paste from other site" feature, or import the file later — no exports, no FTP, no headaches.
 
-🎯 Revolutionary Elementor workflow enhancement that enables instant cross-domain design transfer. Copy any section, page, or complete design from one website and paste it seamlessly on another – transforming how you build WordPress sites forever.
+Built for people who build a lot of sites: agencies, freelancers, and teams who reuse layouts across projects, domains, and staging environments.
 
-✨ **Why Live Copy Paste Changes Everything**
+= ⚡ What makes it different =
 
-🔥 **Instant Cross-Domain Transfer** – Seamlessly move any Elementor design between different websites and domains. No complex exports, no file management, no technical headaches!
+* **Copy *and* Download** – Grab a section to the clipboard, or download it as JSON to build your own reusable library.
+* **Beautiful frontend panel** – Clean SVG icons, rounded corner styling, and hover tooltips. No clutter for your visitors.
+* **Built-in analytics** – A native dashboard shows which pages and sections get copied and downloaded most, so you know which designs actually work.
+* **Role-based access** – Show the buttons to everyone, logged-in users only, or editors and admins only.
+* **Cache-safe & secure** – Nonce-protected requests that keep working even on fully cached pages.
 
-🎨 **Smart Design Preservation** – Every copied element maintains its original styling, animations, custom CSS, and widget configurations perfectly.
+= 🎯 Core Features =
 
-📋 **One-Click Page Duplication** – Clone entire pages, posts, and Elementor templates directly from your WordPress dashboard with zero effort.
+**📋 Copy to Clipboard**
+* Hover-to-reveal copy button on every section and container
+* Preserves styling, animations, custom CSS, and widget settings
+* Works with both flexbox containers and classic sections
+* Reliable on deeply nested containers and inner sections
 
-🛡️ **Intelligent Access Control** – Show copy functions only to authorized users while keeping your site's frontend clean for visitors.
+**📥 Download as JSON**
+* Save any section as a clean `.json` file with one click
+* Import it on any Elementor site whenever you're ready
+* Perfect for building a personal, reusable design library
+* Great fallback when clipboard access is restricted
 
-🎯 **Precision Element Selection** – Target specific sections, containers, or complete page layouts with surgical precision.
+**📊 Native Reporting Dashboard**
+* Total copies and downloads at a glance
+* Top copied pages — with clickable links straight to each page
+* Top copied sections — see which blocks perform
+* Daily activity chart (copies vs downloads), always the last 30 days
+* Filter totals by 7 / 30 / 90 days or all time
+* Page ID, page slug, and page title recorded for every action
 
-== 🌟 Perfect Solution For ==
+**⚙️ Modern Settings Panel**
+* Clean React-powered admin UI under **Settings → Live Copy**
+* Toggle the copy button and download button independently
+* Choose button visibility by role
+* Disable on mobile with one switch
+* Add a "How it works" help/video link for the info icon
 
-✅ **Web Development Agencies** – Maintain design consistency across multiple client websites effortlessly
-✅ **Freelance Designers** – Accelerate project delivery with reusable design components and templates
-✅ **Content Managers** – Duplicate successful page layouts for A/B testing and content variations
-✅ **WordPress Developers** – Transfer designs between staging, development, and production environments
-✅ **Template Creators** – Build and distribute professional website designs faster than ever
+**🔒 Security First**
+* Every request is CSRF-protected with a nonce
+* Automatically refreshes the security token on cached pages so actions never silently fail
+* Private pages require a logged-in user
+* Read-only — never modifies your content
 
-== ⚡ Game-Changing Features ==
+= 🌟 Perfect For =
 
-= 🌐 True Cross-Domain Technology =
-* Works flawlessly between completely different domains and hosting environments
-* No server restrictions or hosting provider limitations
-* Maintains full compatibility with all WordPress configurations
-* Preserves complex nested structures and custom styling
-
-= 🎯 Advanced Design Transfer System =
-* Intelligent detection of Elementor elements and structures
-* Complete preservation of widget settings and configurations
-* Automatic handling of custom CSS and animations
-* Support for complex layouts with nested elements
-
-= 📊 Professional Page Management =
-* Instant post and page duplication functionality
-* Seamless Elementor template library integration
-* Automatic preservation of all metadata and taxonomies
-* Smart CSS regeneration for duplicated content
-
-= 🔒 Enterprise-Grade Security =
-* Role-based access control for copy functions
-* Clean frontend experience for regular visitors
-* Selective element targeting when needed
-* Secure data transfer protocols
-
-== 💪 Built for Performance & Reliability ==
-
-Live Copy Paste is engineered with WordPress best practices and optimized for maximum performance. The plugin uses minimal server resources, loads scripts only when necessary, and integrates seamlessly with Elementor's core functionality.
-
-🔄 **Always Compatible** – Regular updates ensure perfect compatibility with the latest WordPress and Elementor versions.
-
-🛠️ **Developer Friendly** – Clean, well-documented code with hooks and filters for custom integrations.
-
-🌍 **Translation Ready** – Fully internationalized and ready for multilingual websites.
-
-== 🎁 Transform Your Workflow Today ==
-
-Experience the future of WordPress design workflow and build stunning websites in record time. Whether you're creating landing pages, business websites, or complex web applications, Live Copy Paste gives you the tools to work smarter and more efficiently.
-
-Join thousands of satisfied users who have revolutionized their Elementor workflow with Live Copy Paste!
+* **Agencies** – keep design consistent across many client sites
+* **Freelancers** – reuse proven sections and ship faster
+* **Developers** – move layouts between staging, dev, and production
+* **Template builders** – assemble and distribute section libraries
 
 == Installation ==
 
-Getting started with Live Copy Paste is incredibly simple:
+= Automatic =
+1. In your dashboard go to **Plugins → Add New**
+2. Search for "Live Copy"
+3. Click **Install Now**, then **Activate**
 
-1. Upload the `live-copy` folder to your `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Open the Elementor editor and start copying designs between sites instantly
-4. Enjoy lightning-fast cross-domain design transfers!
+= Manual =
+1. Upload the plugin folder to `/wp-content/plugins/`
+2. Activate it through the **Plugins** menu
+3. Done
 
-== How It Works ==
-
-1. **Copy**: Select any Elementor section, container, or complete page design
-2. **Transfer**: The plugin securely captures all design data and settings
-3. **Paste**: Navigate to your target website and paste with perfect fidelity
-4. **Done**: Your design appears instantly with all styling and functionality intact
+= First-Time Setup =
+1. Go to **Settings → Live Copy**
+2. Enable the plugin and pick your button visibility
+3. Choose whether to show the Copy button, Download button, or both
+4. (Optional) Add a help/video URL for the info icon
+5. Save — buttons appear on your Elementor pages on hover
 
 == Frequently Asked Questions ==
 
-= Which page builders are supported? =
+= Which page builder is supported? =
 
-Currently, Live Copy Paste is specifically designed for Elementor Page Builder, the industry-leading WordPress page builder. Our team is actively developing support for additional page builders based on user demand.
+Elementor. The plugin reads Elementor's native data structure, so copied sections paste back into Elementor with full fidelity.
 
-= How do I receive updates and support? =
+= How does copying between sites work? =
 
-Updates are delivered automatically through the WordPress plugin manager. You'll receive notifications whenever new versions are available. For additional support or manual updates, our team is always ready to assist you promptly.
+On the source site you click **Live Copy** — the section's full Elementor data is placed on your clipboard. On the target site, right-click in the Elementor editor and choose **Paste from other site**. The design appears with its styling intact. Both sites should have a compatible Elementor version (and any third-party widgets the design uses).
 
-= Is it safe to use on production websites? =
+= What is the Download button for? =
 
-Absolutely! Live Copy Paste is built with enterprise-grade security and follows WordPress coding standards. The plugin includes role-based access controls and doesn't interfere with your site's frontend performance.
+It saves the section as a `.json` file. Use it to keep a design for later, share it with a teammate, or build a reusable library. You can re-import the JSON on any Elementor site.
 
-= Can I copy designs between different hosting providers? =
+= Can I control who sees the buttons? =
 
-Yes! Live Copy Paste works seamlessly across different hosting environments, domains, and server configurations. There are no restrictions based on hosting providers.
+Yes. Under **Settings → Live Copy** you can show the buttons to everyone, to logged-in users only, or to editors and admins only. You can also enable the Copy and Download buttons independently, and disable them on mobile.
 
-= Does it preserve custom CSS and animations? =
+= What does the analytics dashboard track? =
 
-Yes, Live Copy Paste maintains all custom styling, CSS modifications, animations, and widget configurations when transferring designs between websites.
+Each copy and download is recorded so the Reports tab can show totals, top pages (with quick links), top sections, and a daily activity chart. For each action it stores the page ID, page slug, page title, the section ID, the user ID (if logged in), the visitor IP address, and a timestamp. By default the IP is **anonymized** (you can switch to full or off in settings). Records older than 180 days are automatically deleted, and you can export the full log to CSV from the Reports tab.
 
-== Upgrade Notice ==
+= How do I clear or reset the analytics data? =
 
-🚀 **Stay ahead with the latest features!** Upgrading Live Copy Paste is quick and seamless. Each update brings enhanced performance, new capabilities, and improved compatibility.
+Clearing is intentionally locked down so it can't be wiped by accident. Add `define( 'LIVE_COPY_ALLOW_CLEAR', true );` to your `wp-config.php`, then a **Clear data** button appears on the Reports tab. Without that constant the button stays disabled (and the action is blocked on the server too). Exporting to CSV is always available.
+
+= Do the buttons work on mobile? =
+
+By default they are hidden on mobile for a clean experience and to prevent accidental taps. You can change this in settings. They work great on desktop and tablet.
+
+= Will it work with full-page caching? =
+
+Yes. The plugin verifies a security token (nonce) on every request. If a cached page serves an expired token, the script silently fetches a fresh one and retries, so copy and download keep working.
+
+= Does it slow down my site? =
+
+No. Assets load only on the frontend, only for users allowed to see the buttons, and not at all on mobile when disabled. Nothing loads in the WordPress admin area for visitors.
+
+= Is it translation ready? =
+
+Yes. All strings are internationalized and a `.pot` file is included.
+
+== Privacy ==
+
+This plugin stores a usage log in your own database (a custom table) to power the analytics dashboard. Each copy/download record includes the page ID, page slug, page title, section ID, the acting user ID where available, the visitor's IP address, and a timestamp. The IP is anonymized by default (configurable: full, anonymized, or not stored). No data is sent to any third party. Records are pruned automatically after 180 days and can be exported to CSV. Your data is kept even when the plugin is deleted — it is only removed on uninstall if you opt in with `define( 'LIVE_COPY_ALLOW_CLEAR', true );` in wp-config.php.
 
 == Changelog ==
+
+= 1.1.0 [13th June 2026] =
+
+* New: Redesigned frontend panel with crisp SVG icons, rounded corner styling, and hover tooltips
+* New: One-click **Download** button — save any section as a JSON file
+* New: React-powered settings panel under **Settings → Live Copy**
+* New: Role-based visibility — everyone / logged-in / editors only
+* New: Native reporting dashboard (totals, top pages with links, top sections, daily activity chart)
+* New: Info icon with a configurable "how it works" help/video link (cached in the browser, version-aware)
+* Added: Copy & download history with page ID, page slug, and page title
+* Added: Automatic 180-day history cleanup to keep the database lean
+* Added: Buttons now also appear on dynamically loaded content (popups, AJAX, lazy sections)
+* Added: Per-section opt-in toggle in the Elementor Advanced tab (for Specific Section Mode)
+* Added: IP logging control — anonymized (default), full, or off — for GDPR-friendly analytics
+* Added: Export analytics to CSV, plus guarded "Clear data" (requires a wp-config constant)
+* Added: Translatable frontend button labels and messages
+* Added: Clean uninstall — removes the data table, options, and cron on delete
+* Improved: Developer `live_copy_should_load` filter to disable buttons per page/context
+* Improved: Multisite-safe table creation and cron scheduling
+* Improved: Nonce (CSRF) verification with automatic, cache-safe token refresh
+* Improved: Reliable copying of deeply nested containers and inner sections
+* Improved: Confirmation shown as a clean tooltip instead of button text
+* Improved: Graceful handling when Elementor is inactive
 
 = 1.0.13 [19th August 2025] =
 
@@ -152,3 +186,8 @@ Yes, Live Copy Paste maintains all custom styling, CSS modifications, animations
 = 1.0.0 [25th June 2023] =
 
 * Initial Release
+
+== Upgrade Notice ==
+
+= 1.1.0 =
+Major update: new Download button, modern settings panel, copy/download analytics, cache-safe security, and reliable support for nested containers.

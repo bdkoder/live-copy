@@ -1,15 +1,16 @@
 {
   "name": "elementor-live-copy",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "description": "",
   "main": "gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "find . -name .DS_Store -delete && rimraf ./assets && rimraf ./live-copy",
     "dev": "npm run clean && cross-env NODE_ENV=development grunt",
-    "build": "npm run clean && cross-env NODE_ENV=production grunt && npm run make-pot",
-    "zip": "npm run && npm run build && rsync -av --exclude-from=.buildignore . live-copy && zip -r live-copy-v.$npm_package_version.zip live-copy/*",
-    "make-pot": "wp i18n make-pot . languages/live-copy.pot --exclude=node_modules,build,vendor,assets,src"
+    "build": "npm run clean && cross-env NODE_ENV=production grunt && npm run build:admin && npm run make-pot",
+    "build:admin": "cd admin && npm install --include=dev && npx vite build",
+    "zip": "npm run build && rsync -av --exclude-from=.buildignore . live-copy && zip -r live-copy-v.$npm_package_version.zip live-copy/*",
+    "make-pot": "wp i18n make-pot . languages/live-copy.pot --exclude=node_modules,build,vendor,assets,src,admin"
   },
   "repository": {
     "type": "git",
