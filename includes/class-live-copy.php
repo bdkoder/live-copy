@@ -195,7 +195,7 @@ class Live_Copy {
 			wp_send_json_error( [ 'message' => __( 'Access denied.', 'live-copy' ) ], 403 );
 		}
 
-		$result = $this->get_live_copy_data_settings( $post_id, $widget_id );
+		$result = $this->get_live_copy_data_settings( $post_id, $widget_id, $action_type );
 
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( [ 'message' => $result->get_error_message() ] );
@@ -238,7 +238,7 @@ class Live_Copy {
 		return false;
 	}
 
-	protected function get_live_copy_data_settings( $post_id, $widget_id ) {
+	protected function get_live_copy_data_settings( $post_id, $widget_id, $action_type = 'copy' ) {
 		$errors = new \WP_Error();
 
 		if ( ! class_exists( '\Elementor\Plugin' ) ) {
@@ -268,12 +268,21 @@ class Live_Copy {
 			return $errors;
 		}
 
-		// Wrap in Elementor's "paste from other site" envelope.
-		$widget_data = [
-			'type'     => 'elementor',
-			'siteurl'  => get_rest_url(),
-			'elements' => [ $element ],
-		];
+		if ( 'download' === $action_type ) {
+			$widget_data = [
+				'version' => '0.4',
+				'title'   => 'Live Copy Element',
+				'type'    => isset( $element['elType'] ) ? $element['elType'] : 'section',
+				'content' => [ $element ],
+			];
+		} else {
+			// Wrap in Elementor's "paste from other site" envelope.
+			$widget_data = [
+				'type'     => 'elementor',
+				'siteurl'  => get_rest_url(),
+				'elements' => [ $element ],
+			];
+		}
 
 		return $widget_data;
 	}
