@@ -23,6 +23,15 @@ tailwind.config.js
 webpack.config.js
 src
 live-copy
+admin/src
+admin/node_modules
+admin/package.json
+admin/vite.config.js
+admin/tailwind.config.js
+admin/postcss.config.js
 phpcs.xml
+.ai
+CLAUDE.md
+plan.md
 phpunit.xml
 .vscode

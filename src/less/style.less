@@ -1,48 +1,138 @@
+@panel-bg     : rgba(22, 22, 30, 0.92);
+@tip-bg       : #1f1f29;
+@tip-success  : #1eaa6e;
+@accent-copy  : #ff6a3d;
+@accent-dl    : #4fc3f7;
+@icon-color   : #ffffff;
+
+// ─── Panel (rounded dark corner card, right edge) ───────────────────────────
 .ellc-magic-copy-wrapper {
-  display: none;
-  text-decoration: none;
-  font-size: 15px;
-  position: absolute;
-  right: 0px;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: all .5s;
-  cursor: pointer;
-  z-index: 9999999;
+  display        : none;
+  position       : absolute;
+  right          : 8px;
+  top            : 50%;
+  transform      : translateY(-50%);
+  flex-direction : column;
+  align-items    : center;
+  gap            : 2px;
+  padding        : 6px;
+  background     : @panel-bg;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-radius  : 14px; // all four corners — panel floats anywhere, incl. nested mid-page
+  box-shadow     : 0 8px 28px rgba(0, 0, 0, 0.28);
+  z-index        : 9999999;
+  user-select    : none;
+  pointer-events : auto;
 }
 
-body .sky-live-copy-off .ellc-magic-copy-wrapper {
-  display: none !important;
+// Show only the innermost hovered target's panel.
+.ellc-copy-target.ellc-active > .ellc-magic-copy-wrapper {
+  display: flex;
+  animation: ellc-fade .18s ease;
 }
 
-.elementor-section-wrap>.elementor-section:hover .ellc-magic-copy-wrapper,
-.elementor-section.elementor-top-section:hover .ellc-magic-copy-wrapper,
-.elementor-element.e-con:hover .ellc-magic-copy-wrapper {
-  display: block;
+@keyframes ellc-fade {
+  from { opacity: 0; transform: translateY(-50%) translateX(6px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 
-.ellc-magic-copy-wrapper .ellc-copy-btn {
-  padding: 8px 10px 8px 15px;
-  display: inline-block;
-  background: #6b4ff4;
-  color: #fff !important;
-  border-radius: 20px 0 0 20px;
-  -webkit-border-radius: 20px 0 0 20px;
-  -moz-border-radius: 20px 0 0 20px;
-  -ms-border-radius: 20px 0 0 20px;
-  -o-border-radius: 20px 0 0 20px;
+// Opt-outs
+body .sky-live-copy-off .ellc-magic-copy-wrapper { display: none !important; }
+
+// ─── Icon buttons ───────────────────────────────────────────────────────────
+.ellc-btn {
+  position        : relative;
+  width           : 40px;
+  height          : 40px;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  margin          : 0;
+  padding         : 0;
+  border          : 0;
+  background      : transparent;
+  color           : @icon-color;
+  cursor          : pointer;
+  border-radius   : 11px;
+  text-decoration : none;
+  transition      : background .2s, color .2s, transform .1s;
+  box-shadow      : none;
+
+  &:hover  { background: rgba(255, 255, 255, 0.12); text-decoration: none; }
+  &:active { transform: scale(0.92); }
+  &:focus  { outline: none; }
+
+  svg { display: block; }
 }
 
-.ellc-magic-copy-info {
-  padding: 8px 10px 8px 15px;
-  display: inline-block;
-  background: #6b4ff4;
-  color: #fff !important;
-  font-weight: bolder;
+.ellc-copy-btn:hover     { color: @accent-copy; }
+.ellc-download-btn:hover { color: @accent-dl; }
+
+// Info button — slim, divider above, dimmed until hover
+.ellc-info-btn {
+  width        : 40px;
+  height       : 28px;
+  opacity      : 0.55;
+  margin-top   : 4px;
+  padding-top  : 4px;
+  border-top   : 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 0;
+
+  &:hover { opacity: 1; background: rgba(255, 255, 255, 0.12); color: @icon-color; }
 }
 
-.ellc-copy-btn:hover,
-.ellc-magic-copy-info:hover {
-  background: #e2498a;
-  color: #fff !important;
+// ─── Tooltip (left-side bubble with tail) ───────────────────────────────────
+.ellc-btn[data-tip]::after {
+  content       : attr(data-tip);
+  position      : absolute;
+  right         : calc(100% + 12px);
+  top           : 50%;
+  transform     : translateY(-50%);
+  background    : @tip-bg;
+  color         : #fff;
+  font-size     : 12px;
+  font-weight   : 600;
+  line-height   : 1;
+  white-space   : nowrap;
+  padding       : 8px 12px;
+  border-radius : 8px;
+  box-shadow    : 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity       : 0;
+  pointer-events: none;
+  transition    : opacity .15s;
+}
+
+.ellc-btn[data-tip]::before {
+  content    : '';
+  position   : absolute;
+  right      : calc(100% + 6px);
+  top        : 50%;
+  transform  : translateY(-50%);
+  border     : 6px solid transparent;
+  border-left-color: @tip-bg;
+  opacity    : 0;
+  transition : opacity .15s;
+}
+
+.ellc-btn:hover::after,
+.ellc-btn:hover::before,
+.ellc-btn.ellc-tip-show::after,
+.ellc-btn.ellc-tip-show::before {
+  opacity: 1;
+}
+
+// Success state recolors the bubble + icon
+.ellc-tip-success           { color: @tip-success !important; }
+.ellc-tip-success::after    { background: @tip-success; color: #fff; }
+.ellc-tip-success::before   { border-left-color: @tip-success; }
+
+// ─── Loading pulse ──────────────────────────────────────────────────────────
+@keyframes ellc-pulse { 0%, 100% { opacity: .3; } 50% { opacity: .75; } }
+.ellc-btn.ellc-loading        { cursor: wait; }
+.ellc-btn.ellc-loading svg    { animation: ellc-pulse .8s ease-in-out infinite; }
+
+// ─── Mobile safety net ──────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .ellc-magic-copy-wrapper { display: none !important; }
 }
